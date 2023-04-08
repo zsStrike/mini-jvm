@@ -6,7 +6,7 @@
 
 template<typename D, typename F, typename L, typename P, typename... Args>
 void log_info(const D& file, const F& fun, const L& l, const P& p, const Args&... args) {
-    std::cout << boost::format("[%1%:%2%@%3%]: ") % file % fun % l;
+    std::cout << boost::format("[%1%:%3%@%2%]: ") % file % fun % l;
     boost::format fmt(p);
     (void) std::initializer_list<int>{([&] {fmt % args;}(), 0)...};
     std::cout << fmt.str() << std::endl;

@@ -9,6 +9,7 @@
 #include "classfile/ClassFile.h"
 #include <iomanip>
 #include <memory>
+#include "./rtda/Frame.h"
 
 namespace bpo = boost::program_options;
 
@@ -17,6 +18,45 @@ shared<ClassFile> loadClass(string& className, Classpath& cp) {
     auto cf = std::make_shared<ClassFile>();
     cf->parse(buffer);
     return cf;
+}
+
+void testLocalVars(shared<LocalVars> vars) {
+    vars->setInt(0, 100);
+    vars->setInt(1, -100);
+    vars->setLong(2, 2997924580);
+    vars->setLong(4, -2997924580);
+    vars->setFloat(6, 3.1415926);
+    vars->setDouble(7, 2.71828182845);
+    vars->setRef(9, nullptr);
+    LOG_INFO("%1%", vars->getInt(0));
+    LOG_INFO("%1%", vars->getInt(1));
+    LOG_INFO("%1%", vars->getLong(2));
+    LOG_INFO("%1%", vars->getLong(4));
+    LOG_INFO("%f", vars->getFloat(6));
+    LOG_INFO("%f", vars->getDouble(7));
+    LOG_INFO("%1%", vars->getRef(9));
+}
+
+void testOperandStack(shared<OperandStack> ops) {
+    ops->pushInt(100);
+    ops->pushInt(-100);
+    ops->pushLong(2997924580);
+    ops->pushLong(-2997924580);
+    ops->pushFloat(3.1415926);
+    ops->pushDouble(2.71828182845);
+    ops->pushRef(nullptr);
+    LOG_INFO("%1%", ops->popRef());
+    LOG_INFO("%1%", ops->popDouble());
+    LOG_INFO("%1%", ops->popFloat());
+    LOG_INFO("%1%", ops->popLong());
+    LOG_INFO("%1%", ops->popLong());
+    LOG_INFO("%1%", ops->popInt());
+    LOG_INFO("%1%", ops->popInt());
+}
+
+void testFrame(shared<Frame> frame) {
+    testLocalVars(frame->localVars);
+    testOperandStack(frame->operandStack);
 }
 
 void startJVM(bpo::variables_map vmap) {
@@ -29,6 +69,7 @@ void startJVM(bpo::variables_map vmap) {
     LOG_INFO("jreOption=%1%, cpOption=%2%, mainClass=%3%", jreOption, cpOption, className);
     auto cf = loadClass(className, cp);
     std::cout << *cf << std::endl;
+    testFrame(frame::newFrame(100, 100));
 }
 
 int main(int argc, const char** argv) {
