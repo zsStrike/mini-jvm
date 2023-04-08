@@ -5,7 +5,7 @@
 
 shared<ConstantPool> constantpool::readConstantPool(ClassReader& reader) {
     u16 cpCount = reader.readUint16();
-    LOG_INFO("constantpoll count=%d", cpCount);
+    // LOG_INFO("constantpoll count=%d", cpCount);
     auto scp = std::make_shared<ConstantPool>();
     scp->infos = std::make_shared<vs<ConstantInfo>>(cpCount);
     for (int i = 1; i < cpCount; i++) {

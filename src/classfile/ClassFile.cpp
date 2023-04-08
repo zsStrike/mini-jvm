@@ -28,7 +28,7 @@ void ClassFile::read(ClassReader &reader) {
 
 void ClassFile::readAndCheckMagic(ClassReader &reader) {
     magic = reader.readUint32();
-    LOG_INFO("magic: %x", magic);    
+    // LOG_INFO("magic: %x", magic);    
     if (magic != 0xCAFEBABE) {
         throw "wrong magic";
     }
@@ -37,7 +37,7 @@ void ClassFile::readAndCheckMagic(ClassReader &reader) {
 void ClassFile::readAndCheckVersion(ClassReader &reader) {
     minorVersion = reader.readUint16();
     majorVersion = reader.readUint16();
-    LOG_INFO("version %d.%d", majorVersion, minorVersion);    
+    // LOG_INFO("version %d.%d", majorVersion, minorVersion);    
     if (majorVersion == 45 || 
         minorVersion == 0 && majorVersion >= 46 && majorVersion <= 52) {
             return;
@@ -88,26 +88,23 @@ svs<string> ClassFile::getInterfaceNames() const {
 }
 
 std::ostream &operator<<(std::ostream &out, const ClassFile &classFile) {
-    out << boost::format("version: %1%.%2%\n") % classFile.majorVersion % classFile.minorVersion;
-    out << boost::format("constant count: %1%\n") % classFile.constantPool->infos->size();
-    out << boost::format("access flags: 0x%x\n") % classFile.accessFlags;
-    out << boost::format("this class: %1%\n") % classFile.getClassName()->c_str();
-    out << boost::format("super class: %1%\n") % classFile.getSuperClassName()->c_str();
+    LOG_INFO(boost::format("version: %1%.%2%") % classFile.majorVersion % classFile.minorVersion);
+    LOG_INFO(boost::format("constant count: %1%") % classFile.constantPool->infos->size());
+    LOG_INFO(boost::format("access flags: 0x%x") % classFile.accessFlags);
+    LOG_INFO(boost::format("this class: %1%") % classFile.getClassName()->c_str());
+    LOG_INFO(boost::format("super class: %1%") % classFile.getSuperClassName()->c_str());
     svs<string> interName = classFile.getInterfaceNames();
-    out << boost::format("interfaces count: %1%\n") % interName->size();
+    LOG_INFO(boost::format("interfaces count: %1%") % interName->size());
     for (auto&& name: *interName) {
-        out << *name << "\n";
+        LOG_INFO(*name);
     }
-    out << std::endl;
-    out << boost::format("fields count: %1%\n") % classFile.fields->size();
+    LOG_INFO(boost::format("fields count: %1%") % classFile.fields->size());
     for (auto&& field : *classFile.fields) {
-        out << *field->getName() << "\n";
+        LOG_INFO(*field->getName());
     }
-    out << std::endl;
-    out << boost::format("mehtods count: %1%\n") % classFile.methods->size();
+    LOG_INFO(boost::format("mehtods count: %1%") % classFile.methods->size());
     for (auto&& method : *classFile.methods) {
-        out << *method->getName() << "\n";
+        LOG_INFO(*method->getName());
     }
-    out << std::endl;    
     return out;
 }

@@ -46,8 +46,8 @@ void testOperandStack(shared<OperandStack> ops) {
     ops->pushDouble(2.71828182845);
     ops->pushRef(nullptr);
     LOG_INFO("%1%", ops->popRef());
-    LOG_INFO("%1%", ops->popDouble());
-    LOG_INFO("%1%", ops->popFloat());
+    LOG_INFO("%lf", ops->popDouble());
+    LOG_INFO("%f", ops->popFloat());
     LOG_INFO("%1%", ops->popLong());
     LOG_INFO("%1%", ops->popLong());
     LOG_INFO("%1%", ops->popInt());
@@ -68,7 +68,7 @@ void startJVM(bpo::variables_map vmap) {
     boost::replace_all(className, ".", "/");
     LOG_INFO("jreOption=%1%, cpOption=%2%, mainClass=%3%", jreOption, cpOption, className);
     auto cf = loadClass(className, cp);
-    std::cout << *cf << std::endl;
+    LOG_INFO("%1%", *cf);
     testFrame(frame::newFrame(100, 100));
 }
 

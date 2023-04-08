@@ -14,7 +14,7 @@ namespace fs = boost::filesystem;
 
 WildcardEntry::WildcardEntry(std::string path) {
     std::string baseDir = path.substr(0, path.length() - 2);
-    LOG_INFO("path is %1%, baseDir is %2%", path, baseDir);
+    // LOG_INFO("path is %1%, baseDir is %2%", path, baseDir);
 
     for (fs::directory_entry& entry : fs::recursive_directory_iterator(baseDir)) {
         const fs::path& current_path = entry.path();
@@ -22,7 +22,7 @@ WildcardEntry::WildcardEntry(std::string path) {
             continue;
         }
         if (fs::extension(current_path) == ".jar" || fs::extension(current_path) == ".JAR") {
-            LOG_INFO("loading %1%", current_path.c_str());
+            // LOG_INFO("loading %1%", current_path.c_str());
             entries.push_back(classpath::newEntry(current_path.c_str()));
         }
     }

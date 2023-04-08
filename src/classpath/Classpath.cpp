@@ -52,7 +52,7 @@ void Classpath::parseBootAndExtClasspath(std::string jrePath) {
 }
 
 std::shared_ptr<Entry> classpath::newEntry(std::string path) {
-    LOG_INFO("path is %1%", path);
+    // LOG_INFO("path is %1%", path);
     if (path.find(classpath::pathListSeparator) != std::string::npos) {
         return std::make_shared<CompositeEntry>(path);
     }
