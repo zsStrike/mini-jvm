@@ -3,6 +3,7 @@
 
 struct LocalVars {
     shared<Slot[]> slots;
+    u32 maxLocal;
     LocalVars(u32 maxLocal);
     void setInt(u32 index, i32 val) { slots[index].num = val; }
     i32 getInt(u32 index) { return slots[index].num; }
@@ -34,6 +35,7 @@ struct LocalVars {
     Object* getRef(u32 index) {
         return slots[index].ref;
     }
+    string toString();
 };
 
 namespace localvars {

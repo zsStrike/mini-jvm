@@ -22,3 +22,12 @@ shared<MemberInfo> memberinfo::readerMember(ClassReader& reader,
     member->attributes = attributeinfo::readAttributes(reader, cp);
     return member;
 }
+
+shared<CodeAttribute> MemberInfo::getCodeAttribute() {
+    for (auto&& attrInfo : *attributes) {
+        if (std::dynamic_pointer_cast<CodeAttribute>(attrInfo)) {
+            return std::dynamic_pointer_cast<CodeAttribute>(attrInfo);
+        }
+    }
+    return nullptr;
+}

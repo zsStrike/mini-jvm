@@ -2,6 +2,8 @@
 #include "../common/type.h"
 #include "Frame.h"
 
+struct Frame;
+
 struct Stack {
     u32 maxSize;
     u32 size;

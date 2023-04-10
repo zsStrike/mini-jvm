@@ -17,6 +17,8 @@ struct MemberInfo {
     shared<string> getDescriptor() {
         return cp->getUtf8(descriptorIndex);
     }
+
+    shared<CodeAttribute> getCodeAttribute();
 };
 
 namespace memberinfo {

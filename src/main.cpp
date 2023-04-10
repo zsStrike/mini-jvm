@@ -10,6 +10,7 @@
 #include <iomanip>
 #include <memory>
 #include "./rtda/Frame.h"
+#include "./interpreter/interpreter.h"
 
 namespace bpo = boost::program_options;
 
@@ -18,6 +19,15 @@ shared<ClassFile> loadClass(string& className, Classpath& cp) {
     auto cf = std::make_shared<ClassFile>();
     cf->parse(buffer);
     return cf;
+}
+
+shared<MemberInfo> getMainMethod(shared<ClassFile> cf) {
+    for (auto&& method : *cf->methods) {
+        if (*method->getName() == "main" && *method->getDescriptor() == "([Ljava/lang/String;)V") {
+            return method;
+        }
+    }
+    return nullptr;
 }
 
 void testLocalVars(shared<LocalVars> vars) {
@@ -69,7 +79,11 @@ void startJVM(bpo::variables_map vmap) {
     LOG_INFO("jreOption=%1%, cpOption=%2%, mainClass=%3%", jreOption, cpOption, className);
     auto cf = loadClass(className, cp);
     LOG_INFO("%1%", *cf);
-    testFrame(frame::newFrame(100, 100));
+    auto mainMethod = getMainMethod(cf);
+    if (mainMethod != nullptr) {
+        Interpreter::interpret(mainMethod);
+    }
+//    testFrame(frame::newFrame(100, 100));
 }
 
 int main(int argc, const char** argv) {

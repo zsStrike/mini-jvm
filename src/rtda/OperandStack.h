@@ -45,6 +45,12 @@ struct OperandStack {
         slots[size].ref = nullptr;
         return ref;
     }
+    void pushSlot(Slot slot) {
+        slots[size++] = slot;
+    }
+    Slot popSlot() {
+        return slots[--size];
+    }
 };
 
 namespace operandstack {
