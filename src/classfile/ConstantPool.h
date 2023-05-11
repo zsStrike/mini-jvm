@@ -3,6 +3,8 @@
 // #include "../common/type.h"
 // #include "../common/type.h"
 
+struct ConstantInfo;
+
 struct ConstantPool {
     svs<ConstantInfo> infos;
     shared<ConstantInfo> getConstantInfo(u16 index);
@@ -10,6 +12,7 @@ struct ConstantPool {
     shared<string> getClassName(u16 index);
     shared<string> getUtf8(u16 index);
 };
+
 
 namespace constantpool {
     shared<ConstantPool> readConstantPool(ClassReader &reader);

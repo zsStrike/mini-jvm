@@ -14,6 +14,7 @@ struct ASTORE_1 : NoOperandInstruction {
 
 struct ASTORE_2 : NoOperandInstruction {
     void execute(shared<Frame> frame) override;
+    string toString() override { return "ASTORE_2"; }
 };
 
 struct ASTORE_3 : NoOperandInstruction {

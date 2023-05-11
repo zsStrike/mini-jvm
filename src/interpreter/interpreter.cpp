@@ -24,6 +24,9 @@ void loop(shared<Thread> thread, shared_buffer bytecode) {
             auto inst = instructions::newInstruction(opcode);
             inst->fetchOperands(reader);
             LOG_INFO("pc: %2d, inst: %s", pc, inst->toString());
+            if (opcode == 0xb2) {
+                LOG_INFO("localVars: %1%", frame->localVars->toString());
+            }
             frame->setNextPc(reader->pc);
             // execute
             inst->execute(frame);
@@ -34,13 +37,15 @@ void loop(shared<Thread> thread, shared_buffer bytecode) {
 
 }
 
-void Interpreter::interpret(shared<MemberInfo> memberInfo) {
-    auto codeAttr = memberInfo->getCodeAttribute();
-    auto maxLocals = codeAttr->maxLocals;
-    auto maxStack = codeAttr->maxStack;
-    auto bytecode = codeAttr->code;
+void Interpreter::interpret(std::shared_ptr<heap::Method> method) {
+//    auto thread = thread::newThread();
+//    auto codeAttr = memberInfo->getCodeAttribute();
+//    auto maxLocals = codeAttr->maxLocals;
+//    auto maxStack = codeAttr->maxStack;
+//    auto bytecode = codeAttr->code;
+    LOG_INFO("interpreting...");
     auto thread = thread::newThread();
-    auto frame = thread->newFrame(maxLocals, maxStack);
+    auto frame = thread->newFrame(method);
     thread->pushFrame(frame);
-    loop(thread, bytecode);
+    loop(thread, method->code);
 }

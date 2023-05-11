@@ -20,7 +20,6 @@ shared<Frame> Thread::currentFrame() {
     return stack->top();
 }
 
-shared<Frame> Thread::newFrame(uint maxLocals, uint maxStack) {
-    shared<Thread> ts(this);
-    return frame::newFrame(ts, maxLocals, maxStack);
+shared<Frame> Thread::newFrame(shared<heap::Method> method) {
+    return frame::newFrame(shared_from_this(), method);
 }

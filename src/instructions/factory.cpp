@@ -44,6 +44,15 @@
 #include "math/mul.h"
 #include "math/div.h"
 #include "math/neg.h"
+#include "constants/ldc.h"
+#include "references/getstatic.h"
+#include "references/putstatic.h"
+#include "references/getfield.h"
+#include "references/putfield.h"
+#include "references/new.h"
+#include "references/instanceof.h"
+#include "references/checkcast.h"
+#include "references/invokespecial.h"
 
 shared<Instruction> instructions::newInstruction(u8 opcode) {
     switch (opcode) {
@@ -83,12 +92,12 @@ shared<Instruction> instructions::newInstruction(u8 opcode) {
             return make_shared<BIPUSH>();
         case 0x11:
             return make_shared<SIPUSH>();
-//        case 0x12:
-//            return &LDC{}
-//        case 0x13:
-//            return &LDC_W{}
-//        case 0x14:
-//            return &LDC2_W{}
+        case 0x12:
+            return make_shared<LDC>();
+        case 0x13:
+            return make_shared<LDC_W>();
+        case 0x14:
+            return make_shared<LDC2_W>();
 //        case 0x15:
 //            return NewLoad(false)
 //        case 0x16:
@@ -403,26 +412,26 @@ shared<Instruction> instructions::newInstruction(u8 opcode) {
 //            return areturn
 //        case 0xb1:
 //            return _return
-//        case 0xb2:
-//            return &GetStatic{}
-//        case 0xb3:
-//            return &PupStatic{}
-//        case 0xb4:
-//            return &GetField{}
-//        case 0xb5:
-//            return &PutField{}
+        case 0xb2:
+            return make_shared<GET_STATIC>();
+        case 0xb3:
+            return make_shared<PUT_STATIC>();
+        case 0xb4:
+            return make_shared<GET_FIELD>();
+        case 0xb5:
+            return make_shared<PUT_FIELD>();
 //        case 0xb6:
 //            return &InvokeVirtual{}
-//        case 0xb7:
-//            return &InvokeSpecial{}
+        case 0xb7:
+            return make_shared<INVOKE_SPECIAL>();
 //        case 0xb8:
 //            return &InvokeStatic{}
 //        case 0xb9:
 //            return &InvokeInterface{}
 //        case 0xba:
 //            return &InvokeDynamic{}
-//        case 0xbb:
-//            return &New{}
+        case 0xbb:
+            return make_shared<NEW>();
 //        case 0xbc:
 //            return &NewArray{}
 //        case 0xbd:
@@ -431,10 +440,10 @@ shared<Instruction> instructions::newInstruction(u8 opcode) {
 //            return arraylength
 //        case 0xbf:
 //            return athrow
-//        case 0xc0:
-//            return &CheckCast{}
-//        case 0xc1:
-//            return &InstanceOf{}
+        case 0xc0:
+            return make_shared<CHECK_CAST>();
+        case 0xc1:
+            return make_shared<INSTANCE_OF>();
 //        case 0xc2:
 //            return monitorenter
 //        case 0xc3:
@@ -457,7 +466,7 @@ shared<Instruction> instructions::newInstruction(u8 opcode) {
 //        case 0xff:
 //            return &Bootstrap{} // impdep2
         default:
-            LOG_INFO("not implemneted for opcode: 0x%x", opcode);
+            LOG_INFO("not implemneted for opcode: 0x%x", (uint)opcode);
             throw "not implemneted";
             return nullptr;
     }

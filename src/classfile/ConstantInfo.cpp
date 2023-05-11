@@ -68,6 +68,10 @@ void ConstantClassInfo::readInfo(ClassReader &reader) {
     nameIndex = reader.readUint16();
 }
 
+shared<string> ConstantClassInfo::getName() {
+    return cp->getClassName(nameIndex);
+}
+
 void ConstantNameAndTypeInfo::readInfo(ClassReader &reader) {
     nameIndex = reader.readUint16();
     descriptorIndex = reader.readUint16();
@@ -77,3 +81,12 @@ void ConstantMemberrefInfo::readInfo(ClassReader &reader) {
     classIndex = reader.readUint16();
     nameAndTypeIndex = reader.readUint16();
 }
+
+shared<string> ConstantMemberrefInfo::getClassName() {
+    return cp->getClassName(classIndex);
+}
+
+std::tuple<shared<string>, shared<string>> ConstantMemberrefInfo::getNameAndDescriptor() {
+    return cp->getNameAndType(nameAndTypeIndex);
+}
+

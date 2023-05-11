@@ -34,11 +34,14 @@ tuple<shared<string>, shared<string>> ConstantPool::getNameAndType(u16 index) {
 }
 
 shared<string> ConstantPool::getClassName(u16 index) {
+//    LOG_INFO("getClassName, index = %d", index);
     auto classInfo = std::dynamic_pointer_cast<ConstantClassInfo>(getConstantInfo(index));
     if (classInfo == nullptr) {
-        LOG_INFO("nullptr");
+//        LOG_INFO("nullptr: std::dynamic_pointer_cast; constant type = %s", typeid(*getConstantInfo(index)).name());
+        LOG_INFO("str = %s", std::dynamic_pointer_cast<ConstantUtf8Info>(getConstantInfo(index))->str);
     }
     return getUtf8(classInfo->nameIndex);
+//    return make_shared<string>(std::dynamic_pointer_cast<ConstantUtf8Info>(getConstantInfo(index))->str);
 }
 
 shared<string> ConstantPool::getUtf8(u16 index) {
@@ -47,3 +50,4 @@ shared<string> ConstantPool::getUtf8(u16 index) {
     // LOG_INFO("index: %d", index);
     return std::make_shared<string>(utf8Info->str);
 }
+

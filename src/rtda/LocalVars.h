@@ -1,5 +1,7 @@
+#pragma once
 #include "../common/type.h"
 #include "./Slot.h"
+#include "heap/Object.h"
 
 struct LocalVars {
     shared<Slot[]> slots;
@@ -29,10 +31,10 @@ struct LocalVars {
         i64 bits = getLong(index);
         return *reinterpret_cast<float64*>(&bits);
     }
-    void setRef(u32 index, Object* ref) {
+    void setRef(u32 index, heap::Object* ref) {
         slots[index].ref = ref;
     }
-    Object* getRef(u32 index) {
+    heap::Object* getRef(u32 index) {
         return slots[index].ref;
     }
     string toString();

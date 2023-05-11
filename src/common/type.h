@@ -4,6 +4,7 @@
 #include <memory>
 #include <tuple>
 #include <vector>
+#include <unordered_map>
 
 using byte = uint8_t;
 using u8   = uint8_t;
@@ -30,6 +31,9 @@ using shared = std::shared_ptr<T>;
 using string = std::string;
 template<typename T>
 using vector = std::vector<T>;
+
+template<typename K, typename V>
+using umap = std::unordered_map<K, V>;
 
 template<typename T>
 using vs = vector<shared<T>>;

@@ -2,5 +2,5 @@
 #include "../classfile/MemberInfo.h"
 
 struct Interpreter {
-    static void interpret(shared<MemberInfo> memberInfo);
+    static void interpret(std::shared_ptr<heap::Method> method);
 };

@@ -11,10 +11,12 @@ struct Frame {
     shared<LocalVars> localVars;
     shared<OperandStack> operandStack;
     shared<Thread> thread;
+    shared<heap::Method> method;
     int nextPc;
     void setNextPc(int nextPc) { this->nextPc = nextPc; }
 };
 
 namespace frame {
     shared<Frame> newFrame(shared<Thread> thread, u32 maxLocals, u32 maxStack);
+    shared<Frame> newFrame(shared<Thread> thread, shared<heap::Method> method);
 }

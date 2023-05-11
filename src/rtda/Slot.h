@@ -1,8 +1,9 @@
 #pragma once
 #include "../common/type.h"
-#include "Object.h"
+#include "heap/Object.h"
 
 struct Slot {
     i32 num;
-    Object* ref;
+    heap::Object* ref;
 };
+

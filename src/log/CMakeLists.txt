@@ -1,1 +1,1 @@
-add_library(log log.h log.cpp)
+add_library(log SHARED log.h log.cpp)

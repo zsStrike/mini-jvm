@@ -1,6 +1,7 @@
 #pragma once
 #include "../common/type.h"
 #include "ClassReader.h"
+#include "ConstantPool.h"
 // #include "ConstantPool.h"
 // #include "ConstantPool.h"
 
@@ -67,6 +68,7 @@ struct ConstantClassInfo : ConstantInfoWithConstantPool {
     u16 nameIndex;
     using ConstantInfoWithConstantPool::ConstantInfoWithConstantPool;
     virtual void readInfo(ClassReader& reader);
+    shared<string> getName();
 };
 
 struct ConstantNameAndTypeInfo : ConstantInfoWithConstantPool {
@@ -81,6 +83,8 @@ struct ConstantMemberrefInfo: ConstantInfoWithConstantPool {
     u16 nameAndTypeIndex;
     using ConstantInfoWithConstantPool::ConstantInfoWithConstantPool;
     virtual void readInfo(ClassReader& reader);
+    shared<string> getClassName();
+    std::tuple<shared<string>, shared<string>> getNameAndDescriptor();
 };
 
 struct ConstantFieldrefInfo : ConstantMemberrefInfo {

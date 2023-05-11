@@ -37,11 +37,11 @@ struct OperandStack {
         i64 val = popLong();
         return *reinterpret_cast<float64*>(&val);
     }
-    void pushRef(Object* ref) {
+    void pushRef(heap::Object* ref) {
         slots[size++].ref = ref;
     }
-    Object* popRef() {
-        Object* ref = slots[--size].ref;
+    heap::Object* popRef() {
+        heap::Object* ref = slots[--size].ref;
         slots[size].ref = nullptr;
         return ref;
     }

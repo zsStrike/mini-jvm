@@ -1,3 +1,7 @@
-aux_source_directory(. DIR_SRC)
+#add_subdirectory(heap)
 
-add_library(rtda ${DIR_SRC})
+file(GLOB_RECURSE SRC ./*.cpp ./*.h)
+
+add_library(rtda SHARED ${SRC})
+
+target_link_libraries(rtda classfile)

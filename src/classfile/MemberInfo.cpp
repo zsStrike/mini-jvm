@@ -31,3 +31,12 @@ shared<CodeAttribute> MemberInfo::getCodeAttribute() {
     }
     return nullptr;
 }
+
+shared<ConstantValueAttribute> MemberInfo::getConstantValueAttribute() {
+    for (auto&& attrInfo : *attributes) {
+        if (std::dynamic_pointer_cast<ConstantValueAttribute>(attrInfo)) {
+            return std::dynamic_pointer_cast<ConstantValueAttribute>(attrInfo);
+        }
+    }
+    return nullptr;
+}

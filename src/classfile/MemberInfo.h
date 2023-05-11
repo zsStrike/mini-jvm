@@ -19,6 +19,8 @@ struct MemberInfo {
     }
 
     shared<CodeAttribute> getCodeAttribute();
+
+    shared<ConstantValueAttribute> getConstantValueAttribute();
 };
 
 namespace memberinfo {

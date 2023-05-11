@@ -14,76 +14,79 @@
 
 namespace bpo = boost::program_options;
 
-shared<ClassFile> loadClass(string& className, Classpath& cp) {
-    auto buffer = cp.readClass(className);
-    auto cf = std::make_shared<ClassFile>();
-    cf->parse(buffer);
-    return cf;
-}
-
-shared<MemberInfo> getMainMethod(shared<ClassFile> cf) {
-    for (auto&& method : *cf->methods) {
-        if (*method->getName() == "main" && *method->getDescriptor() == "([Ljava/lang/String;)V") {
-            return method;
-        }
-    }
-    return nullptr;
-}
-
-void testLocalVars(shared<LocalVars> vars) {
-    vars->setInt(0, 100);
-    vars->setInt(1, -100);
-    vars->setLong(2, 2997924580);
-    vars->setLong(4, -2997924580);
-    vars->setFloat(6, 3.1415926);
-    vars->setDouble(7, 2.71828182845);
-    vars->setRef(9, nullptr);
-    LOG_INFO("%1%", vars->getInt(0));
-    LOG_INFO("%1%", vars->getInt(1));
-    LOG_INFO("%1%", vars->getLong(2));
-    LOG_INFO("%1%", vars->getLong(4));
-    LOG_INFO("%f", vars->getFloat(6));
-    LOG_INFO("%f", vars->getDouble(7));
-    LOG_INFO("%1%", vars->getRef(9));
-}
-
-void testOperandStack(shared<OperandStack> ops) {
-    ops->pushInt(100);
-    ops->pushInt(-100);
-    ops->pushLong(2997924580);
-    ops->pushLong(-2997924580);
-    ops->pushFloat(3.1415926);
-    ops->pushDouble(2.71828182845);
-    ops->pushRef(nullptr);
-    LOG_INFO("%1%", ops->popRef());
-    LOG_INFO("%lf", ops->popDouble());
-    LOG_INFO("%f", ops->popFloat());
-    LOG_INFO("%1%", ops->popLong());
-    LOG_INFO("%1%", ops->popLong());
-    LOG_INFO("%1%", ops->popInt());
-    LOG_INFO("%1%", ops->popInt());
-}
-
-void testFrame(shared<Frame> frame) {
-    testLocalVars(frame->localVars);
-    testOperandStack(frame->operandStack);
-}
+//shared<ClassFile> loadClass(string& className, Classpath& cp) {
+//    auto buffer = cp.readClass(className);
+//    auto cf = std::make_shared<ClassFile>();
+//    cf->parse(buffer);
+//    return cf;
+//}
+//
+//shared<MemberInfo> getMainMethod(shared<ClassFile> cf) {
+//    for (auto&& method : *cf->methods) {
+//        if (*method->getName() == "main" && *method->getDescriptor() == "([Ljava/lang/String;)V") {
+//            return method;
+//        }
+//    }
+//    return nullptr;
+//}
+//
+//void testLocalVars(shared<LocalVars> vars) {
+//    vars->setInt(0, 100);
+//    vars->setInt(1, -100);
+//    vars->setLong(2, 2997924580);
+//    vars->setLong(4, -2997924580);
+//    vars->setFloat(6, 3.1415926);
+//    vars->setDouble(7, 2.71828182845);
+//    vars->setRef(9, nullptr);
+//    LOG_INFO("%1%", vars->getInt(0));
+//    LOG_INFO("%1%", vars->getInt(1));
+//    LOG_INFO("%1%", vars->getLong(2));
+//    LOG_INFO("%1%", vars->getLong(4));
+//    LOG_INFO("%f", vars->getFloat(6));
+//    LOG_INFO("%f", vars->getDouble(7));
+//    LOG_INFO("%1%", vars->getRef(9));
+//}
+//
+//void testOperandStack(shared<OperandStack> ops) {
+//    ops->pushInt(100);
+//    ops->pushInt(-100);
+//    ops->pushLong(2997924580);
+//    ops->pushLong(-2997924580);
+//    ops->pushFloat(3.1415926);
+//    ops->pushDouble(2.71828182845);
+//    ops->pushRef(nullptr);
+//    LOG_INFO("%1%", ops->popRef());
+//    LOG_INFO("%lf", ops->popDouble());
+//    LOG_INFO("%f", ops->popFloat());
+//    LOG_INFO("%1%", ops->popLong());
+//    LOG_INFO("%1%", ops->popLong());
+//    LOG_INFO("%1%", ops->popInt());
+//    LOG_INFO("%1%", ops->popInt());
+//}
+//
+//void testFrame(shared<Frame> frame) {
+//    testLocalVars(frame->localVars);
+//    testOperandStack(frame->operandStack);
+//}
 
 void startJVM(bpo::variables_map vmap) {
     auto jreOption = vmap["Xjre"].as<std::string>();
     auto cpOption = vmap["classpath"].as<std::string>();
-    Classpath cp{};
-    cp.parse(jreOption, cpOption);
+    auto cp = make_shared<Classpath>();
+    cp->parse(jreOption, cpOption);
+    auto classLoader = heap::newClassLoader(cp);
     auto className = vmap["mainclass"].as<std::string>();
-    boost::replace_all(className, ".", "/");
-    LOG_INFO("jreOption=%1%, cpOption=%2%, mainClass=%3%", jreOption, cpOption, className);
-    auto cf = loadClass(className, cp);
-    LOG_INFO("%1%", *cf);
-    auto mainMethod = getMainMethod(cf);
+    LOG_INFO("className=%s", className);
+    auto mainClass = classLoader->loadClass(make_shared<string>(className));
+    LOG_INFO("className=%s", className);
+
+    auto mainMethod = mainClass->getMainMethod();
+    LOG_INFO("className=%s", className);
     if (mainMethod != nullptr) {
         Interpreter::interpret(mainMethod);
+    } else {
+        LOG_INFO("main method not found in %s class", className);
     }
-//    testFrame(frame::newFrame(100, 100));
 }
 
 int main(int argc, const char** argv) {
