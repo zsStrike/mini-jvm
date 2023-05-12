@@ -7,3 +7,4 @@ shared<OperandStack> operandstack::newOperandStack(u32 maxStack) {
     }
     return nullptr;
 }
+

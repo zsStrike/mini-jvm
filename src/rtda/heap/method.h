@@ -7,8 +7,10 @@ namespace heap {
         uint maxStack;
         uint maxLocals;
         shared_buffer code;
+        uint argSlotCount;
 
         void copyAttributes(shared<MemberInfo> cfMethod);
+        void calcArgSlotCount();
     };
     svs<Method> newMethods(shared<Class> klass, svs<MemberInfo> cfMethods);
 }

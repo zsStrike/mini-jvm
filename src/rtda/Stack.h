@@ -1,6 +1,6 @@
 #pragma once
 #include "../common/type.h"
-#include "Frame.h"
+//#include "Frame.h"
 
 struct Frame;
 
@@ -14,6 +14,7 @@ struct Stack {
     void push(shared<Frame> frame);
     shared<Frame> pop();
     shared<Frame> top();
+    bool isEmpty() { return _top == nullptr; }
 };
 
 namespace stack {

@@ -3,6 +3,9 @@
 //
 
 #include "method.h"
+#include "method_descriptor_parser.h"
+#include "../../log/log.h"
+
 namespace heap {
     svs<Method> newMethods(shared<Class> klass, svs<MemberInfo> cfMethods) {
         auto size = cfMethods->size();
@@ -12,6 +15,7 @@ namespace heap {
             method->klass = klass;
             method->copyMemberInfo(cfMethods->at(i));
             method->copyAttributes(cfMethods->at(i));
+            method->calcArgSlotCount();
             methods->at(i) = method;
         }
         return methods;
@@ -23,6 +27,22 @@ namespace heap {
             maxLocals = codeAttr->maxLocals;
             code = codeAttr->code;
         }
+    }
+
+    void Method::calcArgSlotCount() {
+        auto parsedDescriptor = parseMethodDescriptor(descriptor);
+
+        for (auto type : *parsedDescriptor->parameterTypes) {
+
+            argSlotCount++;
+            if (*type == "J" || *type == "D") {
+                argSlotCount++;
+            }
+        }
+        if (!isStatic()) {
+            argSlotCount++;
+        }
+
     }
 }
 

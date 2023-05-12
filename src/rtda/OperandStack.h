@@ -45,6 +45,10 @@ struct OperandStack {
         slots[size].ref = nullptr;
         return ref;
     }
+    heap::Object* getRefFromTop(uint n) {
+        LOG_INFO("size = %1% n = %2% index = %3%", size, n, size - 1 - n);
+        return slots[size - 1 - n].ref;
+    }
     void pushSlot(Slot slot) {
         slots[size++] = slot;
     }

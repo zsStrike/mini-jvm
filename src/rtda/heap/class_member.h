@@ -13,21 +13,21 @@ namespace heap {
         shared<string> descriptor;
         shared<Class> klass;
 
-        inline bool isPublic();
-        inline bool isPrivate();
-        inline bool isProtected();
+        bool isPublic();
+        bool isPrivate();
+        bool isProtected();
         bool isStatic();
         bool isFinal();
-        inline bool isSynchronized();
-        inline bool isBridge();
-        inline bool isVarargs();
-        inline bool isNative();
-        inline bool isAbstract();
-        inline bool isStrict();
-        inline bool isVolatile();
-        inline bool isTransient();
-        inline bool isSynthetic();
-        inline bool isEnum();
+        bool isSynchronized();
+        bool isBridge();
+        bool isVarargs();
+        bool isNative();
+        bool isAbstract();
+        bool isStrict();
+        bool isVolatile();
+        bool isTransient();
+        bool isSynthetic();
+        bool isEnum();
 
         bool isAccessibleTo(shared<Class> klass);
 

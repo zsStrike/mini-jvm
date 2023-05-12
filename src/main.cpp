@@ -74,7 +74,7 @@ void startJVM(bpo::variables_map vmap) {
     auto cpOption = vmap["classpath"].as<std::string>();
     auto cp = make_shared<Classpath>();
     cp->parse(jreOption, cpOption);
-    auto classLoader = heap::newClassLoader(cp);
+    auto classLoader = heap::newClassLoader(cp, vmap["verboseClassFlag"].as<bool>());
     auto className = vmap["mainclass"].as<std::string>();
     LOG_INFO("className=%s", className);
     auto mainClass = classLoader->loadClass(make_shared<string>(className));
@@ -83,7 +83,7 @@ void startJVM(bpo::variables_map vmap) {
     auto mainMethod = mainClass->getMainMethod();
     LOG_INFO("className=%s", className);
     if (mainMethod != nullptr) {
-        Interpreter::interpret(mainMethod);
+        Interpreter::interpret(mainMethod, vmap["verboseInstFlag"].as<bool>());
     } else {
         LOG_INFO("main method not found in %s class", className);
     }
@@ -103,6 +103,8 @@ int main(int argc, const char** argv) {
         ("mainclass", bpo::value<std::string>(), "main class")
         ("args", bpo::value<std::vector<std::string>>(), "args")
         ("Xjre", bpo::value<std::string>(&jrepath), "path to jre")
+        ("verboseClassFlag", bpo::value<bool>()->default_value(true), "print class loading info")
+        ("verboseInstFlag", bpo::value<bool>()->default_value(true), "print inst info")
     ;
     bpo::positional_options_description pdes;
     pdes.add("args", -1);

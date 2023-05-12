@@ -13,7 +13,8 @@ struct Frame {
     shared<Thread> thread;
     shared<heap::Method> method;
     int nextPc;
-    void setNextPc(int nextPc) { this->nextPc = nextPc; }
+    void setNextPc(int nextPc_) { this->nextPc = nextPc_; }
+    void revertNextPc();
 };
 
 namespace frame {

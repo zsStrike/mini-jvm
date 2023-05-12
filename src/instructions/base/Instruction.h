@@ -6,7 +6,9 @@
 
 struct Instruction {
     virtual void fetchOperands(shared<BytecodeReader> reader) {};
-    virtual void execute(shared<Frame> frame) {};
+    virtual void execute(shared<Frame> frame) {
+        LOG_INFO("default execute, you may not implemented for some Instruction");
+    };
     virtual string toString() { return "Instruction"; };
 };
 

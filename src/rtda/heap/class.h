@@ -29,6 +29,7 @@ namespace heap {
         uint instanceSlotCount;
         uint staticSlotCount;
         shared<Slots> staticVars;
+        bool initStarted;
 
         bool isPublic();
         bool isFinal();
@@ -42,11 +43,14 @@ namespace heap {
         bool isAccessibleTo(shared<Class> other);
         string getPackageName();
         bool isSubClassOf(shared<Class> other);
+        bool isSuperClassOf(shared<Class> other);
         bool isImplements(shared<Class> iface);
         bool isAssignableFrom(shared<Class> other);
         bool isSubInterfaceOf(shared<Class> iface);
 
 
+        void startInit();
+        shared<Method> getClinitMethod();
         Object* newObject();
         shared<Method> getMainMethod();
 

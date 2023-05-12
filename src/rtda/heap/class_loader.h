@@ -7,6 +7,7 @@ namespace heap {
     struct ClassLoader : public std::enable_shared_from_this<ClassLoader> {
         shared<Classpath> cp;
         umap<string, shared<Class>> classMap;
+        bool verboseFlag;
 
         shared<Class> loadNonArrayClass(shared<string> name);
         shared<Class> loadClass(shared<string> name);
@@ -15,5 +16,5 @@ namespace heap {
 
     };
 
-    shared<ClassLoader> newClassLoader(shared<Classpath> cp);
+    shared<ClassLoader> newClassLoader(shared<Classpath> cp, bool verboseFlag=false);
 }

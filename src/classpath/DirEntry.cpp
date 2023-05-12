@@ -14,7 +14,7 @@ DirEntry::DirEntry(std::string path) {
 }
 
 std::shared_ptr<std::vector<byte>> DirEntry::readClass(std::string className) {
-    LOG_INFO("className = %1%", className);
+    LOG_INFO("className = %1% absDir = %2%", className, absDir);
     bf::path fileName(absDir);
     fileName.append(className);
     bf::fstream istream(fileName);

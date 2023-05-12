@@ -3,6 +3,7 @@
 //
 
 #include "putstatic.h"
+#include "../base/class_init_logic.h"
 
 void PUT_STATIC::execute(shared<Frame> frame) {
     LOG_INFO("PUT_STATIC")
@@ -18,6 +19,11 @@ void PUT_STATIC::execute(shared<Frame> frame) {
     LOG_INFO("PUT_STATIC")
 
     auto klass = field->klass;
+    if (!klass->initStarted) {
+        frame->revertNextPc();
+        initClass(frame->thread, klass);
+        return;
+    }
     LOG_INFO("PUT_STATIC")
     if (!field->isStatic()) {
         LOG_INFO("java.lang.IncompatibleClassChangeError");

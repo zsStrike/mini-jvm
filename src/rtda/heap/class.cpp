@@ -18,9 +18,14 @@ namespace heap {
         klass->superClassName = cf->getSuperClassName();
         klass->interfaceNames = cf->getInterfaceNames();
         klass->constantPool = newConstantPool(klass, cf->constantPool);
+        LOG_INFO("newClass");
 
         klass->fields = newFields(klass, cf->fields);
+        LOG_INFO("newClass");
+
         klass->methods = newMethods(klass, cf->methods);
+        LOG_INFO("newClass");
+
         return klass;
     }
 
@@ -123,8 +128,8 @@ namespace heap {
     }
 
     shared<Method> Class::getStaticMethod(std::shared_ptr<string> name, std::shared_ptr<string> descriptor) {
+        LOG_INFO("method name = %s, descriptor = %s", *name, *descriptor);
         for (auto method : *methods) {
-            LOG_INFO("method name = %s, descriptor = %s", *method->name, *method->descriptor);
             if (method->isStatic() &&
                 *method->name == *name &&
                 *method->descriptor == *descriptor) {
@@ -132,6 +137,18 @@ namespace heap {
             }
         }
         return nullptr;
+    }
+
+    bool Class::isSuperClassOf(shared<Class> other) {
+        return other->isSubClassOf(shared_from_this());
+    }
+
+    void Class::startInit() {
+        initStarted = true;
+    }
+
+    shared<Method> Class::getClinitMethod() {
+        return getStaticMethod(make_shared<string>("<clinit>"), make_shared<string>("()V"));
     }
 }
 

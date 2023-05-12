@@ -1,5 +1,6 @@
 #pragma once
 #include "../../common/type.h"
+#include "../../log/log.h"
 //#include "constant_pool.h"
 //#include "class.h"
 

@@ -19,12 +19,18 @@ std::shared_ptr<std::vector<byte>> Classpath::readClass(std::string className) {
     className += ".class";
     LOG_INFO("className=%1%", className);
     std::shared_ptr<std::vector<byte>> bytes = nullptr;
-    if (bytes = bootClasspath->readClass(className); bytes != nullptr) {
+    bytes = bootClasspath->readClass(className);
+    if (bytes != nullptr) {
         return bytes;
     }
-    if (bytes = extClasspath->readClass(className); bytes != nullptr) {
+    LOG_INFO("className=%1%", className);
+
+    bytes = extClasspath->readClass(className);
+    if (bytes != nullptr) {
         return bytes;
-    }    
+    }
+    LOG_INFO("className=%1%", className);
+
     return userClasspath->readClass(className);
 }
 

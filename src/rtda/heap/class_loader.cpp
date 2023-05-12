@@ -95,20 +95,23 @@ namespace heap {
         prepare(klass);
     }
 
-    shared<ClassLoader> newClassLoader(shared<Classpath> cp) {
+    shared<ClassLoader> newClassLoader(shared<Classpath> cp, bool verboseFlag) {
         auto loader = std::make_shared<ClassLoader>();
         loader->cp = cp;
         loader->classMap = {};
+        loader->verboseFlag = verboseFlag;
         return loader;
     }
 
 
     shared<Class> ClassLoader::loadNonArrayClass(shared<string> name) {
+        LOG_INFO("loadNonArrayClass for %s", *name);
         auto [data, entry] = readClass(name);
-        LOG_INFO("loadNonArrayClass");
         auto klass = defineClass(data);
         link(klass);
-        LOG_INFO("loaded %s from %s", *name, entry);
+        if (verboseFlag) {
+            LOG_INFO("loaded %s", *name);
+        }
         return klass;
     }
 
@@ -135,8 +138,8 @@ namespace heap {
 
 
     void resolveSuperClass(shared<Class> klass) {
-        LOG_INFO("resolveSuperClass")
-        if (*klass->name == "java/lang/Object") {
+        LOG_INFO("resolveSuperClass: %s", *klass->superClassName);
+        if (*klass->name == "java.lang.Object") {
             klass->superClass = klass->loader->loadClass(klass->superClassName);
         }
     }
@@ -158,7 +161,10 @@ namespace heap {
         klass->loader = shared_from_this(); // TODO: std::make_shared_from_this
         resolveSuperClass(klass);
         resolveInterfaces(klass);
+
         this->classMap[*klass->name] = klass;
+        LOG_INFO("class %s defined", *klass->name);
+
         return klass;
     }
 }

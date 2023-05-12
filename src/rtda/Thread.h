@@ -3,7 +3,7 @@
 #include "Frame.h"
 #include "Stack.h"
 
-struct Frame;
+//struct Frame;
 struct Stack;
 
 struct Thread : std::enable_shared_from_this<Thread> {
@@ -15,6 +15,7 @@ struct Thread : std::enable_shared_from_this<Thread> {
     shared<Frame> popFrame();
     shared<Frame> currentFrame();
     shared<Frame> newFrame(shared<heap::Method> method);
+    bool isStackEmpty() { return stack->isEmpty(); }
 };
 
 namespace thread {

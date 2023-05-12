@@ -16,6 +16,10 @@ ZipEntry::ZipEntry(std::string path) {
 
 std::shared_ptr<std::vector<byte>> ZipEntry::readClass(std::string className) {
     // LOG_INFO("absPath = %1%, className = %2%", absPath, className);
+    className = className.substr(0, className.find_last_of('.'));
+    std::replace(className.begin(), className.end(), '.', '/');
+    className += ".class";
+    LOG_INFO("className: %1%", className);
     auto path = bf::path(absPath).append(className);
     struct zip* za = zip_open(absPath.c_str(), ZIP_RDONLY, nullptr);
     if (!za) {

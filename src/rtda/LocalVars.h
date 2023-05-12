@@ -37,6 +37,9 @@ struct LocalVars {
     heap::Object* getRef(u32 index) {
         return slots[index].ref;
     }
+    void setSlot(u32 index, Slot slot) {
+        slots[index] = slot;
+    }
     string toString();
 };
 

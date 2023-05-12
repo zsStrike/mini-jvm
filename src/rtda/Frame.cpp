@@ -1,4 +1,5 @@
 #include "Frame.h"
+#include "Thread.h"
 
 shared<Frame> frame::newFrame(shared<Thread> thread, u32 maxLocals, u32 maxStack) {
     auto frame = make_shared<Frame>();
@@ -15,4 +16,8 @@ shared<Frame> frame::newFrame(shared<Thread> thread, shared<heap::Method> method
     frame->operandStack = operandstack::newOperandStack(method->maxStack);
     frame->method = method;
     return frame;
+}
+
+void Frame::revertNextPc() {
+    this->nextPc = thread->pc;
 }

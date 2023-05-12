@@ -53,6 +53,10 @@
 #include "references/instanceof.h"
 #include "references/checkcast.h"
 #include "references/invokespecial.h"
+#include "references/invokevirtual.h"
+#include "references/invokestatic.h"
+#include "references/invokeinterface.h"
+#include "control/return.h"
 
 shared<Instruction> instructions::newInstruction(u8 opcode) {
     switch (opcode) {
@@ -392,26 +396,27 @@ shared<Instruction> instructions::newInstruction(u8 opcode) {
             return make_shared<IF_ACMPNE>();
         case 0xa7:
             return make_shared<GOTO>();
-        case 0xa8:
+//        case 0xa8:
 //            return &JSR{}
 //        case 0xa9:
-//            return &RET{}
+//            return make_shared<RET>();
         case 0xaa:
             return make_shared<TABLE_SWITCH>();
         case 0xab:
             return make_shared<LOOKUP_SWITCH>();
-//        case 0xac:
-//            return ireturn
-//        case 0xad:
-//            return lreturn
-//        case 0xae:
-//            return freturn
-//        case 0xaf:
-//            return dreturn
-//        case 0xb0:
-//            return areturn
-//        case 0xb1:
-//            return _return
+        case 0xac:
+            return make_shared<IRETURN>();
+        case 0xad:
+            return make_shared<LRETURN>();
+
+        case 0xae:
+            return make_shared<FRETURN>();
+        case 0xaf:
+            return make_shared<DRETURN>();
+        case 0xb0:
+            return make_shared<ARETURN>();
+        case 0xb1:
+            return make_shared<RETURN>();
         case 0xb2:
             return make_shared<GET_STATIC>();
         case 0xb3:
@@ -420,14 +425,14 @@ shared<Instruction> instructions::newInstruction(u8 opcode) {
             return make_shared<GET_FIELD>();
         case 0xb5:
             return make_shared<PUT_FIELD>();
-//        case 0xb6:
-//            return &InvokeVirtual{}
+        case 0xb6:
+            return make_shared<INVOKE_VIRTUAL>();
         case 0xb7:
             return make_shared<INVOKE_SPECIAL>();
-//        case 0xb8:
-//            return &InvokeStatic{}
-//        case 0xb9:
-//            return &InvokeInterface{}
+        case 0xb8:
+            return make_shared<INVOKE_STATIC>();
+        case 0xb9:
+            return make_shared<INVOKE_INTERFACE>();
 //        case 0xba:
 //            return &InvokeDynamic{}
         case 0xbb:

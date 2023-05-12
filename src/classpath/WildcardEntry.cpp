@@ -13,6 +13,7 @@
 namespace fs = boost::filesystem;
 
 WildcardEntry::WildcardEntry(std::string path) {
+//    LOG_INFO("className = %1% absDir = %2%", className, absDir);
     std::string baseDir = path.substr(0, path.length() - 2);
     // LOG_INFO("path is %1%, baseDir is %2%", path, baseDir);
 

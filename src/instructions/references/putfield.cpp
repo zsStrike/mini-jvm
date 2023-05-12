@@ -3,6 +3,7 @@
 //
 
 #include "putfield.h"
+#include "../base/class_init_logic.h"
 
 void PUT_FIELD::execute(shared<Frame> frame) {
     auto currentMethod = frame->method;
@@ -11,6 +12,11 @@ void PUT_FIELD::execute(shared<Frame> frame) {
     auto fieldRef = std::static_pointer_cast<heap::FieldRefConstant>(cp->getConstant(index));
     auto field = fieldRef->val->resolvedField();
     auto klass = field->klass;
+    if (!klass->initStarted) {
+        frame->revertNextPc();
+        initClass(frame->thread, klass);
+        return;
+    }
     if (field->isStatic()) {
         LOG_INFO("java.lang.IncompatibleClassChangeError");
         return;

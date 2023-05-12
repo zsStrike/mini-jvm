@@ -11,6 +11,6 @@ file(GLOB_RECURSE  SRC ./*.cpp ./*.h)
 #        ../rtda/heap/class_member.h
 #        ../rtda/heap/class_member.cpp)
 
-add_library(instructions SHARED ${SRC} references/invokespecial.h)
+add_library(instructions SHARED ${SRC} control/return.h references/invokestatic.h references/invokevirtual.h references/invokeinterface.h base/class_init_logic.h)
 
 target_link_libraries(instructions rtda)

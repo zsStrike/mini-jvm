@@ -10,34 +10,55 @@
 #include <memory>
 #include "../log/log.h"
 
-void loop(shared<Thread> thread, shared_buffer bytecode) {
-    shared<Frame> frame = thread->popFrame();
+void logFrames(shared<Thread> thread) {
+    while (!thread->isStackEmpty()) {
+        auto frame = thread->popFrame();
+        auto method = frame->method;
+        auto className = method->klass->name;
+        LOG_INFO(">> pc: %1% %2%.%3%%4%  ", frame->nextPc, *className, *method->name, *method->descriptor);
+    }
+}
+
+void logInstruction(shared<Frame> frame, shared<Instruction> inst) {
+    auto method = frame->method;
+    auto className = method->klass->name;
+    auto methodName = method->name;
+    auto pc = frame->thread->pc;
+    LOG_INFO("%1%.%2%() # %3% %4% %5%", *className, *methodName, pc, inst->toString(), typeid(*inst).name())
+}
+
+void loop(shared<Thread> thread, bool logInst) {
+    shared<Frame> frame = thread->currentFrame();
     auto reader = std::make_shared<BytecodeReader>();
     try {
         while (true) {
+            frame = thread->currentFrame();
             auto pc = frame->nextPc;
             thread->setPc(pc);
             // decode
-            reader->reset(bytecode, pc);
+            reader->reset(frame->method->code, pc);
             auto opcode = reader->readUint8();
             LOG_INFO("opcode: 0x%x", (uint)opcode);
             auto inst = instructions::newInstruction(opcode);
             inst->fetchOperands(reader);
             LOG_INFO("pc: %2d, inst: %s", pc, inst->toString());
-            if (opcode == 0xb2) {
-                LOG_INFO("localVars: %1%", frame->localVars->toString());
-            }
             frame->setNextPc(reader->pc);
+            if (logInst) {
+                logInstruction(frame, inst);
+            }
             // execute
             inst->execute(frame);
+            if (thread->isStackEmpty()) {
+                break;
+            }
         }
     } catch (...) {
-        LOG_INFO("localVars: %1%", frame->localVars->toString());
+        logFrames(frame->thread);
     }
 
 }
 
-void Interpreter::interpret(std::shared_ptr<heap::Method> method) {
+void Interpreter::interpret(std::shared_ptr<heap::Method> method, bool logInst) {
 //    auto thread = thread::newThread();
 //    auto codeAttr = memberInfo->getCodeAttribute();
 //    auto maxLocals = codeAttr->maxLocals;
@@ -47,5 +68,5 @@ void Interpreter::interpret(std::shared_ptr<heap::Method> method) {
     auto thread = thread::newThread();
     auto frame = thread->newFrame(method);
     thread->pushFrame(frame);
-    loop(thread, method->code);
+    loop(thread, logInst);
 }
