@@ -6,6 +6,7 @@
 #include "access_flag.h"
 #include "Object.h"
 #include "../../log/log.h"
+#include "class_name_helper.h"
 
 namespace heap {
     shared<Class> newClass(shared<ClassFile> cf) {
@@ -94,11 +95,35 @@ namespace heap {
         if (s == t) {
             return true;
         }
-        if (!t->isInterface()) {
-            return s->isSubClassOf(t);
+        if (!s->isArray()) {
+            if (!s->isInterface()) {
+                if (!t->isInterface()) {
+                    return s->isSubClassOf(t);
+                } else {
+                    return s->isImplements(t);
+                }
+            } else {
+                if (!t->isInterface()) {
+                    return t->isJlObject();
+                } else {
+                    return t->isSuperInterfaceOf(s);
+                }
+            }
         } else {
-            return s->isImplements(t);
+            if (!t->isArray()) {
+                if (!t->isInterface()) {
+                    return t->isJlObject();
+                } else {
+                    return t->isJlCloneable() || t->isJioSerializable();
+                }
+            } else {
+                auto sc = s->componentClass();
+                auto tc = t->componentClass();
+                return sc == tc || tc->isAssignableFrom(sc);
+            }
         }
+
+        return false;
     }
 
     bool Class::isImplements(shared<Class> iface) {
@@ -149,6 +174,89 @@ namespace heap {
 
     shared<Method> Class::getClinitMethod() {
         return getStaticMethod(make_shared<string>("<clinit>"), make_shared<string>("()V"));
+    }
+
+    bool Class::isArray() {
+        return name->at(0) == '[';
+    }
+
+    Object *Class::newArray(uint count) {
+        if (!isArray()) {
+            LOG_INFO("Not array class: %s", *name);
+        }
+        if (*name == "[Z") { return heap::newArray<i8>(shared_from_this(), count); }
+        else if (*name == "[B") { return heap::newArray<i8>(shared_from_this(), count); }
+        else if (*name == "[C") { return heap::newArray<u16>(shared_from_this(), count); }
+        else if (*name == "[S") { return heap::newArray<i16>(shared_from_this(), count); }
+        else if (*name == "[I") { return heap::newArray<i32>(shared_from_this(), count); }
+        else if (*name == "[J") { return heap::newArray<i64>(shared_from_this(), count); }
+        else if (*name == "[F") { return heap::newArray<float32>(shared_from_this(), count); }
+        else if (*name == "[D") { return heap::newArray<float64>(shared_from_this(), count); }
+        else { return heap::newArray<Object*>(shared_from_this(), count); }
+    }
+
+    shared<Class> Class::arrayClass() {
+        auto arrayClassName = getArrayClassName(name);
+        return loader->loadClass(arrayClassName);
+    }
+
+    shared<string> toClassName(shared<string> descriptor) {
+        if (descriptor->at(0) == '[') { // array
+            return descriptor;
+        }
+        if (descriptor->at(0) == 'L') { // Object
+            return make_shared<string>(descriptor->begin() + 1, descriptor->end());
+        }
+        for (auto [className, d] : primitiveTypes) {
+            if (d == *descriptor) {     // primitive
+                return make_shared<string>(className);
+            }
+        }
+        LOG_INFO("invalid descriptor: %s", *descriptor);
+        return nullptr;
+    }
+
+    shared<string> getComponentClassName(shared<string> className) {
+        if (className->at(0) == '[') {
+            auto componentTypeDescriptor = make_shared<string>(className->begin() + 1, className->end());
+            return toClassName(componentTypeDescriptor);
+        }
+        LOG_INFO("not array: %s", *className);
+        return nullptr;
+    }
+
+    shared<Class> Class::componentClass() {
+        auto componentClassName = getComponentClassName(name);
+        return loader->loadClass(componentClassName);
+    }
+
+    bool Class::isSuperInterfaceOf(shared<Class> iface) {
+        return iface->isSubInterfaceOf(shared_from_this());
+    }
+
+    bool Class::isJlObject() {
+        return *name == "java/lang/Object";
+    }
+
+    bool Class::isJlCloneable() {
+        return *name == "java/lang/Cloneable";
+    }
+
+    bool Class::isJioSerializable() {
+        return *name == "java/io/Serializable";
+    }
+
+    shared<Field> Class::getField(shared<string> name, shared<string> descriptor, bool isStatic) {
+        for (auto c = shared_from_this(); c != nullptr; c = c->superClass) {
+            for (auto field : *c->fields) {
+                if (field->isStatic() == isStatic &&
+                    *field->name == *name &&
+                    *field->descriptor == *descriptor) {
+                    return field;
+                }
+            }
+        }
+        return nullptr;
     }
 }
 

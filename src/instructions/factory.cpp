@@ -57,6 +57,12 @@
 #include "references/invokestatic.h"
 #include "references/invokeinterface.h"
 #include "control/return.h"
+#include "references/multianewarray.h"
+#include "references/arraylength.h"
+#include "stores/xastore.h"
+#include "loads/xaload.h"
+#include "references/newarray.h"
+#include "references/anewarray.h"
 
 shared<Instruction> instructions::newInstruction(u8 opcode) {
     switch (opcode) {
@@ -102,16 +108,19 @@ shared<Instruction> instructions::newInstruction(u8 opcode) {
             return make_shared<LDC_W>();
         case 0x14:
             return make_shared<LDC2_W>();
-//        case 0x15:
-//            return NewLoad(false)
-//        case 0x16:
-//            return NewLoad(true)
-//        case 0x17:
-//            return NewLoad(false)
-//        case 0x18:
-//            return NewLoad(true)
-//        case 0x19:
-//            return NewLoad(false)
+        case 0x15:
+            return make_shared<ILOAD>();
+        case 0x16:
+            return make_shared<LLOAD>();
+        case 0x17:
+            return make_shared<FLOAD>();
+
+        case 0x18:
+            return make_shared<DLOAD>();
+
+        case 0x19:
+            return make_shared<ALOAD>();
+
         case 0x1a:
             return make_shared<ILOAD_0>();
         case 0x1b:
@@ -152,32 +161,33 @@ shared<Instruction> instructions::newInstruction(u8 opcode) {
             return make_shared<ALOAD_2>();
         case 0x2d:
             return make_shared<ALOAD_3>();
-//        case 0x2e:
-//            return iaload
-//        case 0x2f:
-//            return laload
-//        case 0x30:
-//            return faload
-//        case 0x31:
-//            return daload
-//        case 0x32:
-//            return aaload
-//        case 0x33:
-//            return baload
-//        case 0x34:
-//            return caload
-//        case 0x35:
-//            return saload
-//        case 0x36:
-//            return NewStore(false)
-//        case 0x37:
-//            return NewStore(true)
-//        case 0x38:
-//            return NewStore(false)
-//        case 0x39:
-//            return NewStore(true)
-//        case 0x3a:
-//            return NewStore(false)
+        case 0x2e:
+            return make_shared<IALOAD>();
+        case 0x2f:
+            return make_shared<LALOAD>();
+        case 0x30:
+            return make_shared<FALOAD>();
+        case 0x31:
+            return make_shared<DALOAD>();
+        case 0x32:
+            return make_shared<AALOAD>();
+        case 0x33:
+            return make_shared<BALOAD>();
+        case 0x34:
+            return make_shared<CALOAD>();
+        case 0x35:
+            return make_shared<SALOAD>();
+
+        case 0x36:
+            return make_shared<ISTORE>();
+        case 0x37:
+            return make_shared<LSTORE>();
+        case 0x38:
+            return make_shared<FSTORE>();
+        case 0x39:
+            return make_shared<DSTORE>();
+        case 0x3a:
+            return make_shared<ASTORE>();
         case 0x3b:
             return make_shared<ISTORE_0>();
         case 0x3c:
@@ -219,21 +229,21 @@ shared<Instruction> instructions::newInstruction(u8 opcode) {
         case 0x4e:
             return make_shared<ASTORE_3>();
         case 0x4f:
-//            return iastore
-//        case 0x50:
-//            return lastore
-//        case 0x51:
-//            return fastore
-//        case 0x52:
-//            return dastore
-//        case 0x53:
-//            return aastore
-//        case 0x54:
-//            return bastore
-//        case 0x55:
-//            return castore
-//        case 0x56:
-//            return sastore
+            return make_shared<IASTORE>();
+        case 0x50:
+            return make_shared<LASTORE>();
+        case 0x51:
+            return make_shared<FASTORE>();
+        case 0x52:
+            return make_shared<DASTORE>();
+        case 0x53:
+            return make_shared<AASTORE>();
+        case 0x54:
+            return make_shared<BASTORE>();
+        case 0x55:
+            return make_shared<CASTORE>();
+        case 0x56:
+            return make_shared<SASTORE>();
         case 0x57:
             return make_shared<POP>();
         case 0x58:
@@ -437,12 +447,12 @@ shared<Instruction> instructions::newInstruction(u8 opcode) {
 //            return &InvokeDynamic{}
         case 0xbb:
             return make_shared<NEW>();
-//        case 0xbc:
-//            return &NewArray{}
-//        case 0xbd:
-//            return &ANewArray{}
-//        case 0xbe:
-//            return arraylength
+        case 0xbc:
+            return make_shared<NEW_ARRAY>();
+        case 0xbd:
+            return make_shared<ANEW_ARRAY>();
+        case 0xbe:
+            return make_shared<ARRAY_LENGTH>();
 //        case 0xbf:
 //            return athrow
         case 0xc0:
@@ -455,8 +465,8 @@ shared<Instruction> instructions::newInstruction(u8 opcode) {
 //            return monitorexit
 //        case 0xc4:
 //            return &Wide{}
-//        case 0xc5:
-//            return &MultiANewArray{}
+        case 0xc5:
+            return make_shared<MULTI_ANEW_ARRAY>();
 //        case 0xc6:
 //            return NewIfNull()
 //        case 0xc7:

@@ -1,6 +1,7 @@
 #include "AttributeInfo.h"
 #include "./ConstantPool.h"
 #include <memory>
+#include "../log/log.h"
 
 shared<AttributeInfo> attributeinfo::newAttributeInfo(shared<string> attrName,
                                                       u32 attrLen,
@@ -43,6 +44,7 @@ shared<AttributeInfo> attributeinfo::readAttribute(ClassReader &reader,
     u16 attrNameIndex = reader.readUint16();
     auto attrName = cp->getUtf8(attrNameIndex);
     u32 attrLen = reader.readUint32();
+//    LOG_INFO("attrName = %s attrLen = %d", *attrName, attrLen);
     auto attrInfo = newAttributeInfo(attrName, attrLen, cp);
     attrInfo->readInfo(reader);
     return attrInfo;

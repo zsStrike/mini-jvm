@@ -17,7 +17,7 @@ void Classpath::parseUserClasspath(std::string cpPath) {
 
 std::shared_ptr<std::vector<byte>> Classpath::readClass(std::string className) {
     className += ".class";
-    LOG_INFO("className=%1%", className);
+    LOG_INFO("className = %1%", className);
     std::shared_ptr<std::vector<byte>> bytes = nullptr;
     bytes = bootClasspath->readClass(className);
     if (bytes != nullptr) {

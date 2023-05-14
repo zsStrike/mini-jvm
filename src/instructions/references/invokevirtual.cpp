@@ -5,6 +5,7 @@
 #include "invokevirtual.h"
 #include "../base/method_invoke_logic.h"
 #include "../../rtda/heap/method_lookup.h"
+#include "../../rtda/heap/string_pool.h"
 
 void println(shared<OperandStack> stack, shared<string> descriptor) {
     LOG_INFO("descrptor=%1%", *descriptor)
@@ -16,7 +17,11 @@ void println(shared<OperandStack> stack, shared<string> descriptor) {
     else if (*descriptor == "(F)V") { LOG_INFO("%1%", stack->popFloat()); }
     else if (*descriptor == "(J)V") { LOG_INFO("%1%", stack->popLong()); }
     else if (*descriptor == "(D)V") { LOG_INFO("%1%", stack->popDouble()); }
-    else { LOG_INFO("println: %s", *descriptor); }
+    else if (*descriptor == "(Ljava/lang/String;)V") {
+        auto jStr = stack->popRef();
+        auto cppStr = heap::cppString(jStr);
+        LOG_INFO(*cppStr);
+    } else { LOG_INFO("println: %s", *descriptor); }
     stack->popRef();
 }
 

@@ -13,13 +13,13 @@ shared<ConstantInfo> constantinfo::newConstantInfo(u8 tag,
         case CONSTANT_String: return std::make_shared<ConstantStringInfo>(cp);
         case CONSTANT_Class: return std::make_shared<ConstantClassInfo>(cp);
         case CONSTANT_Fieldref: return std::make_shared<ConstantFieldrefInfo>(cp);
-        case CONSTANT_MethodType: return std::make_shared<ConstantMethodTypeInfo>(cp);
+        case CONSTANT_MethodType: return std::make_shared<ConstantMethodTypeInfo>();
         case CONSTANT_Methodref: return std::make_shared<ConstantMethodrefInfo>(cp);
         case CONSTANT_InterfaceMethodref: return std::make_shared<ConstantInterfaceMethodrefInfo>(cp);
         case CONSTANT_NameAndType: return std::make_shared<ConstantNameAndTypeInfo>(cp);
-        case CONSTANT_MethodHandle: return std::make_shared<ConstantMethodHandleInfo>(cp);
-        case CONSTANT_InvokeDynamic: return std::make_shared<ConstantInvokeDynamicInfo>(cp);
-        default: LOG_INFO("bad tag"); return nullptr;
+        case CONSTANT_MethodHandle: return std::make_shared<ConstantMethodHandleInfo>();
+        case CONSTANT_InvokeDynamic: return std::make_shared<ConstantInvokeDynamicInfo>();
+        default: LOG_INFO("bad tag=%d", (int)tag); return nullptr;
     }
 }
 
@@ -90,3 +90,16 @@ std::tuple<shared<string>, shared<string>> ConstantMemberrefInfo::getNameAndDesc
     return cp->getNameAndType(nameAndTypeIndex);
 }
 
+void ConstantMethodHandleInfo::readInfo(ClassReader &reader) {
+    referenceKind = reader.readUint8();
+    referenceIndex = reader.readUint16();
+}
+
+void ConstantMethodTypeInfo::readInfo(ClassReader &reader) {
+    descriptorIndex = reader.readUint16();
+}
+
+void ConstantInvokeDynamicInfo::readInfo(ClassReader &reader) {
+    bootstrapMethodAttrIndex = reader.readUint16();
+    nameAndTypeIndex = reader.readUint16();
+}

@@ -29,63 +29,50 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="08e80506-e489-43df-8626-6faef12458f1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/FibonacciTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InvokeDemo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/instructions/base/class_init_logic.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/instructions/base/class_init_logic.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/instructions/base/method_invoke_logic.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/instructions/base/method_invoke_logic.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/instructions/control/return.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/instructions/control/return.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/instructions/references/invokeinterface.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/instructions/references/invokeinterface.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/instructions/references/invokestatic.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/instructions/references/invokestatic.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/instructions/references/invokevirtual.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/instructions/references/invokevirtual.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/rtda/heap/method_descriptor.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/rtda/heap/method_descriptor.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/rtda/heap/method_descriptor_parser.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/rtda/heap/method_descriptor_parser.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/rtda/heap/method_lookup.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/rtda/heap/method_lookup.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BubbleSortTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/HelloWorld.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/instructions/loads/xaload.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/instructions/loads/xaload.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/instructions/references/anewarray.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/instructions/references/anewarray.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/instructions/references/arraylength.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/instructions/references/arraylength.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/instructions/references/multianewarray.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/instructions/references/multianewarray.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/instructions/references/newarray.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/instructions/references/newarray.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/instructions/stores/xastore.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/instructions/stores/xastore.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/rtda/heap/class_name_helper.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/rtda/heap/class_name_helper.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/rtda/heap/string_pool.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/rtda/heap/string_pool.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FibonacciTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/FibonacciTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FibonacciTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/FibonacciTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jvm_start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/jvm_start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classfile/AttributeInfo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/classfile/AttributeInfo.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classfile/ClassFile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/classfile/ClassFile.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classfile/ConstantInfo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/classfile/ConstantInfo.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classfile/ConstantInfo.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/classfile/ConstantInfo.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classfile/ConstantPool.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/classfile/ConstantPool.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classpath/Classpath.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/classpath/Classpath.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classpath/DirEntry.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/classpath/DirEntry.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classpath/WildcardEntry.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/classpath/WildcardEntry.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classpath/ZipEntry.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/classpath/ZipEntry.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/type.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/type.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/instructions/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/instructions/base/Instruction.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/base/Instruction.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/instructions/comparisions/ifcond.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/comparisions/ifcond.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions/constants/ldc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/constants/ldc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/instructions/factory.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/factory.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/instructions/references/invokespecial.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/references/invokespecial.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/instructions/references/new.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/references/new.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/instructions/references/putfield.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/references/putfield.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/instructions/references/putstatic.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/references/putstatic.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions/references/invokevirtual.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/references/invokevirtual.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/interpreter/interpreter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/interpreter/interpreter.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/interpreter/interpreter.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/interpreter/interpreter.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rtda/Frame.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/Frame.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rtda/Frame.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/Frame.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rtda/LocalVars.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/LocalVars.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rtda/OperandStack.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/OperandStack.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rtda/OperandStack.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/OperandStack.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rtda/Stack.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/Stack.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rtda/Thread.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/Thread.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rtda/heap/Object.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/Object.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rtda/heap/Object.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/Object.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/rtda/heap/class.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/class.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/rtda/heap/class.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/class.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/rtda/heap/class_loader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/class_loader.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/rtda/heap/class_loader.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/class_loader.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rtda/heap/class_member.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/class_member.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rtda/heap/cp_interface_methodref.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/cp_interface_methodref.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rtda/heap/cp_interface_methodref.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/cp_interface_methodref.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rtda/heap/cp_memthodref.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/cp_memthodref.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rtda/heap/cp_memthodref.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/cp_memthodref.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rtda/heap/cp_symref.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/cp_symref.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rtda/heap/method.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/method.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rtda/heap/method.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/method.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,7 +146,7 @@
       <window_info id="Bookmarks" side_tool="true" />
       <window_info id="Commit_Guest" show_stripe_button="false" />
       <window_info id="Pull Requests" weight="0.32990152" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20259392" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27057242" />
       <window_info id="Commit" order="1" weight="0.25" />
       <window_info id="Structure" order="2" weight="0.21351835" />
       <window_info anchor="bottom" id="CMake" weight="0.25248617" />
@@ -200,6 +187,11 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.main">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="classpath" type="CMakeRunConfiguration" factoryName="Application" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="mini-jvm" TARGET_NAME="classpath" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -215,7 +207,7 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="main" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="    --Xjre /usr/lib/jvm/java-8-openjdk-amd64/jre \     --classpath $PROJECT_DIR$ \     --verboseInstFlag true                  \     --verboseClassFlag true                  \     --mainclass FibonacciTest" REDIRECT_INPUT="true" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="mini-jvm" TARGET_NAME="main" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="mini-jvm" RUN_TARGET_NAME="main">
+    <configuration name="main" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="--Xjre /usr/lib/jvm/java-8-openjdk-amd64/jre \ --classpath $PROJECT_DIR$ \ --verboseInstFlag false \ --verboseClassFlag true \ --mainclass HelloWorld \ hello world this is args test" REDIRECT_INPUT="true" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="mini-jvm" TARGET_NAME="main" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="mini-jvm" RUN_TARGET_NAME="main">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -282,7 +274,9 @@
       <workItem from="1683790505081" duration="1724000" />
       <workItem from="1683814381770" duration="13844000" />
       <workItem from="1683841417604" duration="169000" />
-      <workItem from="1683879851639" duration="107000" />
+      <workItem from="1683879851639" duration="485000" />
+      <workItem from="1683880350507" duration="5966000" />
+      <workItem from="1683902655921" duration="9911000" />
     </task>
     <servers />
   </component>
@@ -306,7 +300,7 @@
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/classpath/Classpath.cpp</url>
           <line>21</line>
-          <option name="timeStamp" value="2" />
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -14,6 +14,7 @@ namespace heap {
         tuple<shared_buffer, shared<Entry>> readClass(shared<string> name);
         shared<Class> defineClass(shared_buffer data);
 
+        shared<Class> loadArrayClass(shared<string> name);
     };
 
     shared<ClassLoader> newClassLoader(shared<Classpath> cp, bool verboseFlag=false);

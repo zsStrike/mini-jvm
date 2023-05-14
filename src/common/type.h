@@ -39,7 +39,7 @@ template<typename T>
 using vs = vector<shared<T>>;
 
 template<typename T>
-using sv = vector<shared<T>>;
+using sv = shared<vector<T>>;
 
 template<typename T>
 using svs = shared<vector<shared<T>>>;

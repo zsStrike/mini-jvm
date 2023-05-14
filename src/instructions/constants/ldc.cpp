@@ -3,9 +3,11 @@
 //
 
 #include "ldc.h"
+#include "../../rtda/heap/string_pool.h"
 
 void ldc(shared<Frame> frame, uint index) {
     auto stack = frame->operandStack;
+    auto klass = frame->method->klass;
     auto cp = frame->method->klass->constantPool;
     shared<heap::Constant> c = cp->getConstant(index);
     if (std::dynamic_pointer_cast<heap::i32Constant>(c)) {
@@ -13,7 +15,8 @@ void ldc(shared<Frame> frame, uint index) {
     } else if (std::dynamic_pointer_cast<heap::f32Constant>(c)) {
         stack->pushFloat(std::dynamic_pointer_cast<heap::f32Constant>(c)->val);
     } else if (std::dynamic_pointer_cast<heap::stringConstant>(c)) {
-
+        auto internedStr = heap::JString(klass->loader, std::dynamic_pointer_cast<heap::stringConstant>(c)->val);
+        stack->pushRef(internedStr);
     } else if (std::dynamic_pointer_cast<heap::ClassRefConstant>(c)) {
 
     } else {

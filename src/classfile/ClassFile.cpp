@@ -79,6 +79,7 @@ svs<string> ClassFile::getInterfaceNames() const {
     int size = interfaces->size();
     auto names = std::make_shared<vs<string>>();
     for (int i = 0; i < size; i++) {
+        // TODO: FIXME
         if (interfaces->at(i) == 0) {
             continue;
         }

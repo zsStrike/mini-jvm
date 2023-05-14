@@ -1,6 +1,6 @@
 public class FibonacciTest {
    public static void main(String[] args) {
-      long x = fibonacci(20);
+      long x = fibonacci(15);
       System.out.println(x);
    }
    private static long fibonacci(long n) {

@@ -100,17 +100,22 @@ struct ConstantInterfaceMethodrefInfo : ConstantMemberrefInfo {
 };
 
 
-struct ConstantMethodTypeInfo : ConstantMemberrefInfo {
-    using ConstantMemberrefInfo::ConstantMemberrefInfo;
+struct ConstantMethodTypeInfo : ConstantInfo {
+    u16 descriptorIndex;
+    void readInfo(ClassReader &reader) override;
 };
 
 
-struct ConstantMethodHandleInfo : ConstantMemberrefInfo {
-    using ConstantMemberrefInfo::ConstantMemberrefInfo;
+struct ConstantMethodHandleInfo : ConstantInfo {
+    u8 referenceKind;
+    u16 referenceIndex;
+    void readInfo(ClassReader &reader) override;
 };
 
-struct ConstantInvokeDynamicInfo : ConstantMemberrefInfo {
-    using ConstantMemberrefInfo::ConstantMemberrefInfo;
+struct ConstantInvokeDynamicInfo : ConstantInfo {
+    u16 bootstrapMethodAttrIndex;
+    u16 nameAndTypeIndex;
+    void readInfo(ClassReader &reader) override;
 };
 
 namespace constantinfo {

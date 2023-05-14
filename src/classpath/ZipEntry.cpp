@@ -19,7 +19,6 @@ std::shared_ptr<std::vector<byte>> ZipEntry::readClass(std::string className) {
     className = className.substr(0, className.find_last_of('.'));
     std::replace(className.begin(), className.end(), '.', '/');
     className += ".class";
-    LOG_INFO("className: %1%", className);
     auto path = bf::path(absPath).append(className);
     struct zip* za = zip_open(absPath.c_str(), ZIP_RDONLY, nullptr);
     if (!za) {
@@ -45,9 +44,8 @@ std::shared_ptr<std::vector<byte>> ZipEntry::readClass(std::string className) {
     // LOG_INFO("size: %1%", bytes->size());
 
     zip_file_t *file = zip_fopen_index(za, index, 0);
-
     zip_fread(file, bytes->data(), st.size);
-
+    LOG_INFO("className: %1%", className);
     zip_fclose(file);
     zip_close(za);
 

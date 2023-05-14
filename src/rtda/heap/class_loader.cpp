@@ -5,6 +5,8 @@
 #include "class_loader.h"
 #include "../../log/log.h"
 #include "./constant_pool.h"
+#include "access_flag.h"
+#include "string_pool.h"
 
 namespace heap {
     void calcInstanceFieldSlotIds(shared<Class> klass) {
@@ -66,7 +68,9 @@ namespace heap {
             } else if (f64Des.find(des) != string::npos) {
                 vars->setDouble(slotId, std::static_pointer_cast<f64Constant>(contant)->val);
             } else if (strDes.find(des) != string::npos) {
-                LOG_INFO("panic: todo");
+                auto str = std::static_pointer_cast<stringConstant>(contant)->val;
+                auto jStr = JString(klass->loader, str);
+                vars->setRef(slotId, jStr);
             }
         }
     }
@@ -119,6 +123,7 @@ namespace heap {
         if (classMap.count(*name) == 1) {
             return classMap[*name];
         }
+        if (name->at(0) == '[') return loadArrayClass(name);
         return loadNonArrayClass(name);
     }
 
@@ -165,6 +170,20 @@ namespace heap {
         this->classMap[*klass->name] = klass;
         LOG_INFO("class %s defined", *klass->name);
 
+        return klass;
+    }
+
+    shared<Class> ClassLoader::loadArrayClass(shared<string> name) {
+        auto klass = make_shared<Class>();
+        klass->accessFlags = ACC_PUBLIC;
+        klass->name = name;
+        klass->loader = shared_from_this();
+        klass->initStarted = true;
+        klass->superClass = loadClass(make_shared<string>("java/lang/Object"));
+        klass->interfaces = make_shared<vs<Class>>();
+        klass->interfaces->push_back(loadClass(make_shared<string>("java/lang/Cloneable")));
+        klass->interfaces->push_back(loadClass(make_shared<string>("java/io/Serializable")));
+        classMap[*name] = klass;
         return klass;
     }
 }

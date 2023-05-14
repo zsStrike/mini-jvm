@@ -83,7 +83,13 @@ void startJVM(bpo::variables_map vmap) {
     auto mainMethod = mainClass->getMainMethod();
     LOG_INFO("className=%s", className);
     if (mainMethod != nullptr) {
-        Interpreter::interpret(mainMethod, vmap["verboseInstFlag"].as<bool>());
+        LOG_INFO("className=%s", className);
+        auto args = make_shared<vector<string>>();
+        if (!vmap["args"].empty()) {
+            args = make_shared<vector<string>>(vmap["args"].as<vector<string>>());
+        }
+        LOG_INFO("className=%s", className);
+        Interpreter::interpret(mainMethod, vmap["verboseInstFlag"].as<bool>(), args);
     } else {
         LOG_INFO("main method not found in %s class", className);
     }
