@@ -6,7 +6,7 @@
 
 void scheduleClinit(shared<Thread> thread, shared<heap::Class> klass) {
     auto clinit = klass->getClinitMethod();
-    if (clinit != nullptr) {
+    if (clinit != nullptr && clinit->klass == klass) {
         auto newFrame = thread->newFrame(clinit);
         thread->pushFrame(newFrame);
     }

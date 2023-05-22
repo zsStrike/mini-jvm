@@ -18,7 +18,9 @@ void ldc(shared<Frame> frame, uint index) {
         auto internedStr = heap::JString(klass->loader, std::dynamic_pointer_cast<heap::stringConstant>(c)->val);
         stack->pushRef(internedStr);
     } else if (std::dynamic_pointer_cast<heap::ClassRefConstant>(c)) {
-
+        auto classRef = std::dynamic_pointer_cast<heap::ClassRefConstant>(c)->val;
+        auto classObj = classRef->resolvedClass()->jClass;
+        stack->pushRef(classObj);
     } else {
         LOG_INFO("ldc: todo");
     }

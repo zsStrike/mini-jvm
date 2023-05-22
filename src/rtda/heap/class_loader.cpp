@@ -7,6 +7,7 @@
 #include "./constant_pool.h"
 #include "access_flag.h"
 #include "string_pool.h"
+#include "class_name_helper.h"
 
 namespace heap {
     void calcInstanceFieldSlotIds(shared<Class> klass) {
@@ -104,12 +105,13 @@ namespace heap {
         loader->cp = cp;
         loader->classMap = {};
         loader->verboseFlag = verboseFlag;
+        loader->loadBasicClasses();
+        loader->loadPrimitiveClasses();
         return loader;
     }
 
 
     shared<Class> ClassLoader::loadNonArrayClass(shared<string> name) {
-        LOG_INFO("loadNonArrayClass for %s", *name);
         auto [data, entry] = readClass(name);
         auto klass = defineClass(data);
         link(klass);
@@ -121,10 +123,18 @@ namespace heap {
 
     shared<Class> ClassLoader::loadClass(shared<string> name) {
         if (classMap.count(*name) == 1) {
+            LOG_INFO("class=%s already loaded", *name);
             return classMap[*name];
         }
-        if (name->at(0) == '[') return loadArrayClass(name);
-        return loadNonArrayClass(name);
+        LOG_INFO("start loading class: %s", *name);
+        auto klass = name->at(0) == '[' ? loadArrayClass(name) : loadNonArrayClass(name);
+        if (classMap.count("java/lang/Class") == 1) {
+            auto jlClassClass = classMap["java/lang/Class"];
+            klass->jClass = jlClassClass->newObject();
+            klass->jClass->extra = klass;
+        }
+        LOG_INFO("end loading class: %s", *name);
+        return klass;
     }
 
     tuple<shared_buffer, shared<Entry>> ClassLoader::readClass(shared<string> name) {
@@ -143,32 +153,30 @@ namespace heap {
 
 
     void resolveSuperClass(shared<Class> klass) {
-        LOG_INFO("resolveSuperClass: %s", *klass->superClassName);
-        if (*klass->name == "java.lang.Object") {
+//        LOG_INFO("resolveSuperClass: %s", *klass->superClassName);
+        if (*klass->name != "java/lang/Object") {
             klass->superClass = klass->loader->loadClass(klass->superClassName);
         }
     }
 
     void resolveInterfaces(shared<Class> klass) {
-        LOG_INFO("resolveInterfaces")
+//        LOG_INFO("resolveInterfaces")
         auto count = klass->interfaceNames->size();
-        if (count > 0) {
-            klass->interfaces = make_shared<vs<Class>>(count);
-            for (int i = 0; i < count; i++) {
-                klass->interfaces->at(i) = klass->loader->loadClass(klass->interfaceNames->at(i));
-            }
+        klass->interfaces = make_shared<vs<Class>>(count);
+        for (int i = 0; i < count; i++) {
+            klass->interfaces->at(i) = klass->loader->loadClass(klass->interfaceNames->at(i));
         }
     }
 
     shared<Class> ClassLoader::defineClass(shared_buffer data) {
-        LOG_INFO("ClassLoader::defineClass")
+//        LOG_INFO("ClassLoader::defineClass")
         auto klass = parseClass(data);
         klass->loader = shared_from_this(); // TODO: std::make_shared_from_this
         resolveSuperClass(klass);
         resolveInterfaces(klass);
 
         this->classMap[*klass->name] = klass;
-        LOG_INFO("class %s defined", *klass->name);
+//        LOG_INFO("class %s defined", *klass->name);
 
         return klass;
     }
@@ -178,6 +186,7 @@ namespace heap {
         klass->accessFlags = ACC_PUBLIC;
         klass->name = name;
         klass->loader = shared_from_this();
+        klass->methods = make_shared<vs<Method>>();
         klass->initStarted = true;
         klass->superClass = loadClass(make_shared<string>("java/lang/Object"));
         klass->interfaces = make_shared<vs<Class>>();
@@ -185,6 +194,34 @@ namespace heap {
         klass->interfaces->push_back(loadClass(make_shared<string>("java/io/Serializable")));
         classMap[*name] = klass;
         return klass;
+    }
+
+    void ClassLoader::loadBasicClasses() {
+        auto jlClassClass = loadClass(make_shared<string>("java/lang/Class"));
+        for (auto& [key, klass] : classMap) {
+            if (klass->jClass == nullptr) {
+                klass->jClass = jlClassClass->newObject();
+                klass->jClass->extra = klass;
+            }
+        }
+    }
+
+    void ClassLoader::loadPrimitiveClasses() {
+        for (auto [primitiveType, _] : primitiveTypes) {
+            loadPrimitiveClass(make_shared<string>(primitiveType));
+        }
+    }
+
+    void ClassLoader::loadPrimitiveClass(shared<string> className) {
+        LOG_INFO("loading: %s", *className);
+        auto klass = make_shared<Class>();
+        klass->accessFlags = ACC_PUBLIC;
+        klass->name = className;
+        klass->loader = shared_from_this();
+        klass->initStarted = true;
+        klass->jClass = classMap["java/lang/Class"]->newObject();
+        klass->jClass->extra = klass;
+        classMap[*className] = klass;
     }
 }
 

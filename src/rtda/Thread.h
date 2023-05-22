@@ -15,6 +15,7 @@ struct Thread : std::enable_shared_from_this<Thread> {
     shared<Frame> popFrame();
     shared<Frame> currentFrame();
     shared<Frame> newFrame(shared<heap::Method> method);
+    shared<Frame> getFrame(int n);
     bool isStackEmpty() { return stack->isEmpty(); }
 };
 

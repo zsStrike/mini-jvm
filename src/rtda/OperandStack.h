@@ -11,6 +11,12 @@ struct OperandStack {
         slots = std::make_unique<Slot[]>(maxStack);
         size = 0;
     }
+    void pushBoolean(bool b) {
+        slots[size++].num = b ? 1 : 0;
+    }
+    bool popBoolean() {
+        return slots[--size].num != 0;
+    }
     void pushInt(i32 val) { slots[size++].num = val; }
     i32 popInt() { return slots[--size].num; }
     void pushFloat(float32 val) { 
@@ -46,7 +52,7 @@ struct OperandStack {
         return ref;
     }
     heap::Object* getRefFromTop(uint n) {
-        LOG_INFO("size = %1% n = %2% index = %3%", size, n, size - 1 - n);
+//        LOG_INFO("size = %1% n = %2% index = %3%", size, n, size - 1 - n);
         return slots[size - 1 - n].ref;
     }
     void pushSlot(Slot slot) {

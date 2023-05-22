@@ -6,17 +6,13 @@
 #include "../base/class_init_logic.h"
 
 void PUT_STATIC::execute(shared<Frame> frame) {
-    LOG_INFO("PUT_STATIC")
     auto currentMethod = frame->method;
     auto currentClass = currentMethod->klass;
-    LOG_INFO("PUT_STATIC")
 
     auto cp = currentClass->constantPool;
     auto fieldRef = std::static_pointer_cast<heap::FieldRefConstant>(cp->getConstant(index));
-    LOG_INFO("PUT_STATIC")
 
     auto field = fieldRef->val->resolvedField();
-    LOG_INFO("PUT_STATIC")
 
     auto klass = field->klass;
     if (!klass->initStarted) {
@@ -24,7 +20,6 @@ void PUT_STATIC::execute(shared<Frame> frame) {
         initClass(frame->thread, klass);
         return;
     }
-    LOG_INFO("PUT_STATIC")
     if (!field->isStatic()) {
         LOG_INFO("java.lang.IncompatibleClassChangeError");
         return;
@@ -38,7 +33,6 @@ void PUT_STATIC::execute(shared<Frame> frame) {
     auto slotId = field->SlotId;
     auto slots = klass->staticVars;
     auto stack = frame->operandStack;
-    LOG_INFO("PUT_STATIC")
     switch (descriptor->at(0)) {
         case 'Z':
         case 'B':

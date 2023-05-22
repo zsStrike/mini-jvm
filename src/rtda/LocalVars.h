@@ -34,6 +34,9 @@ struct LocalVars {
     void setRef(u32 index, heap::Object* ref) {
         slots[index].ref = ref;
     }
+    heap::Object* getThis() {
+        return getRef(0);
+    }
     heap::Object* getRef(u32 index) {
         return slots[index].ref;
     }

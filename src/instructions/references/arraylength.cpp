@@ -8,6 +8,9 @@
 void ARRAY_LENGTH::execute(shared<Frame> frame) {
     auto stack = frame->operandStack;
     auto arrRef = stack->popRef();
+    if (arrRef == nullptr) {
+        LOG_INFO("java.lang.NullPointerException");
+    }
     auto arrLen = arrRef->getLen();
     stack->pushInt(arrLen);
 }

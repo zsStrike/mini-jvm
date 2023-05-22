@@ -4,6 +4,7 @@ add_subdirectory(classfile)
 add_subdirectory(rtda)
 add_subdirectory(instructions)
 add_subdirectory(interpreter)
+add_subdirectory(native)
 
 add_executable(main main.cpp)
-target_link_libraries(main boost_program_options classpath classfile rtda instructions interpreter)
+target_link_libraries(main boost_program_options classpath classfile rtda instructions interpreter native)

@@ -9,22 +9,15 @@ void PUT_FIELD::execute(shared<Frame> frame) {
     auto currentMethod = frame->method;
     auto currentClass = currentMethod->klass;
     auto cp = currentClass->constantPool;
-    auto fieldRef = std::static_pointer_cast<heap::FieldRefConstant>(cp->getConstant(index));
+    auto fieldRef = std::dynamic_pointer_cast<heap::FieldRefConstant>(cp->getConstant(index));
     auto field = fieldRef->val->resolvedField();
     auto klass = field->klass;
-    if (!klass->initStarted) {
-        frame->revertNextPc();
-        initClass(frame->thread, klass);
-        return;
-    }
     if (field->isStatic()) {
         LOG_INFO("java.lang.IncompatibleClassChangeError");
-        return;
     }
     if (field->isFinal()) {
         if (currentClass != klass || *currentMethod->name != "<init>") {
             LOG_INFO("java.lang.IllegalAccessError");
-            return;
         }
     }
     auto descriptor = field->descriptor;

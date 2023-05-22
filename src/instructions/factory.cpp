@@ -63,6 +63,9 @@
 #include "loads/xaload.h"
 #include "references/newarray.h"
 #include "references/anewarray.h"
+#include "reserved/invoke_native.hpp"
+#include "extended/ifnull.h"
+#include "extended/wide.h"
 
 shared<Instruction> instructions::newInstruction(u8 opcode) {
     switch (opcode) {
@@ -250,16 +253,16 @@ shared<Instruction> instructions::newInstruction(u8 opcode) {
             return make_shared<POP2>();
         case 0x59:
             return make_shared<DUP>();
-//        case 0x5a:
-//            return dup_x1
-//        case 0x5b:
-//            return dup_x2
+        case 0x5a:
+            return make_shared<DUP_X1>();
+        case 0x5b:
+            return make_shared<DUP_X2>();
         case 0x5c:
             return make_shared<DUP2>();
-//        case 0x5d:
-//            return dup2_x1
-//        case 0x5e:
-//            return dup2_x2
+        case 0x5d:
+            return make_shared<DUP2_X1>();
+        case 0x5e:
+            return make_shared<DUP2_X2>();
         case 0x5f:
             return make_shared<SWAP>();
         case 0x60:
@@ -360,12 +363,12 @@ shared<Instruction> instructions::newInstruction(u8 opcode) {
             return make_shared<D2L>();
         case 0x90:
             return make_shared<D2F>();
-//        case 0x91:
-//            return i2b
-//        case 0x92:
-//            return i2c
-//        case 0x93:
-//            return i2s
+        case 0x91:
+            return make_shared<I2B>();
+        case 0x92:
+            return make_shared<I2C>();
+        case 0x93:
+            return make_shared<I2S>();
         case 0x94:
             return make_shared<LCMP>();
         case 0x95:
@@ -463,21 +466,21 @@ shared<Instruction> instructions::newInstruction(u8 opcode) {
 //            return monitorenter
 //        case 0xc3:
 //            return monitorexit
-//        case 0xc4:
-//            return &Wide{}
+        case 0xc4:
+            return make_shared<WIDE>();
         case 0xc5:
             return make_shared<MULTI_ANEW_ARRAY>();
-//        case 0xc6:
-//            return NewIfNull()
-//        case 0xc7:
-//            return NewIfNonNull()
+        case 0xc6:
+            return make_shared<IFNULL>();
+        case 0xc7:
+            return make_shared<IFNONULL>();
         case 0xc8:
             return make_shared<GOTO_W>();
 //        case 0xc9:
 //            return &JSR_W{}
             //case 0xca: todo breakpoint
-//        case 0xfe:
-//            return invoke_native // impdep1
+        case 0xfe:
+            return make_shared<INVOKE_NATIVE>();
 //        case 0xff:
 //            return &Bootstrap{} // impdep2
         default:

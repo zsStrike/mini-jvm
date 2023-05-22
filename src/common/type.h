@@ -5,6 +5,7 @@
 #include <tuple>
 #include <vector>
 #include <unordered_map>
+#include <any>
 
 using byte = uint8_t;
 using u8   = uint8_t;
@@ -48,4 +49,7 @@ template<typename... Args>
 using tuple = std::tuple<Args...>;
 
 using std::make_shared;
+using std::make_unique;
+using std::any;
+using std::any_cast;
 

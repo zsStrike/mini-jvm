@@ -36,6 +36,17 @@ shared<Frame> Stack::top() {
     return _top;
 }
 
+shared<Frame> Stack::getFrame(int n) {
+    vs<Frame> vec{};
+    for (int i = 0; i <= n; i++) {
+        vec.push_back(pop());
+    }
+    for (auto it = vec.rbegin(); it != vec.rend(); it++) {
+        push(*it);
+    }
+    return vec.at(vec.size() - 1);
+}
+
 shared<Stack> stack::newStack(u32 maxSize) {
     return std::make_shared<Stack>(maxSize);
 }

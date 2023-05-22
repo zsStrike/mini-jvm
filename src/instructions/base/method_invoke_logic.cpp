@@ -6,6 +6,11 @@
 
 void invoke_Method(shared<Frame> invokerFrame, shared<heap::Method> method) {
     LOG_INFO("methodToBeInvoked: %s.%s%s", *method->klass->name, *method->name, *method->descriptor)
+//    if (*method->name == "registerNatives") {
+//        // TODO
+//        LOG_INFO("calling registerNatives.............")
+//        return;
+//    }
     auto thread = invokerFrame->thread;
     auto newFrame = thread->newFrame(method);
     thread->pushFrame(newFrame);
@@ -14,13 +19,5 @@ void invoke_Method(shared<Frame> invokerFrame, shared<heap::Method> method) {
         auto slot = invokerFrame->operandStack->popSlot();
         newFrame->localVars->setSlot(i, slot);
     }
-    LOG_INFO("method = %1%, locaVars = %2%", *method->name, newFrame->localVars->toString());
-    // TODO;
-    if (method->isNative()) {
-        if (*method->name == "registerNatives") {
-            thread->popFrame();
-        } else {
-            LOG_INFO("native method: %s.%s%s", *method->klass->name, *method->name, *method->descriptor);
-        }
-    }
+//    LOG_INFO("method = %1%, locaVars = %2%", *method->name, newFrame->localVars->toString());
 }

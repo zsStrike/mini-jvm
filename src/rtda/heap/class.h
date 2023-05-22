@@ -31,6 +31,7 @@ namespace heap {
         uint staticSlotCount;
         shared<Slots> staticVars;
         bool initStarted;
+        Object* jClass; // java.lang.Class 实例
 
         bool isPublic();
         bool isFinal();
@@ -44,6 +45,7 @@ namespace heap {
         bool isJlObject();
         bool isJlCloneable();
         bool isJioSerializable();
+        bool isPrimitive();
 
         bool isAccessibleTo(shared<Class> other);
         string getPackageName();
@@ -65,8 +67,15 @@ namespace heap {
         shared<Method> getMainMethod();
         shared<Class> arrayClass();
 
+
+        shared<Method> getMethod(std::shared_ptr<string> name, std::shared_ptr<string> descriptor, bool isStatic);
         shared<Method> getStaticMethod(std::shared_ptr<string> name, std::shared_ptr<string> descriptor);
+        shared<Method> getInstanceMethod(std::shared_ptr<string> name, std::shared_ptr<string> descriptor);
         shared<Field> getField(shared<string> name, shared<string> descriptor, bool isStatic);
+
+        shared<string> getJavaName();
+        Object* getRefVar(shared<string> fieldName, shared<string> fieldDescriptor);
+        void setRefVar(shared<string> fieldName, shared<string> fieldDescriptor, Object* ref);
     };
 
     shared<Class> newClass(shared<ClassFile> cf);

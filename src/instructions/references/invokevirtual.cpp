@@ -8,8 +8,8 @@
 #include "../../rtda/heap/string_pool.h"
 
 void println(shared<OperandStack> stack, shared<string> descriptor) {
-    LOG_INFO("descrptor=%1%", *descriptor)
-    if (*descriptor == "(Z)V") { LOG_INFO("%1%", stack->popInt() != 0); }
+//    LOG_INFO("descrptor=%1%", *descriptor)
+    if (*descriptor == "(Z)V") { LOG_INFO("%1%", stack->popInt() != 0 ? "true" : "false"); }
     else if (*descriptor == "(C)V") { LOG_INFO("%1%", stack->popInt()); }
     else if (*descriptor == "(B)V") { LOG_INFO("%1%", stack->popInt()); }
     else if (*descriptor == "(S)V") { LOG_INFO("%1%", stack->popInt()); }
@@ -44,11 +44,13 @@ void INVOKE_VIRTUAL::execute(shared<Frame> frame) {
         LOG_INFO("java.lang.NullPointerException");
     }
     if (resolvedMethod->isProtected() &&
-        resolvedMethod->klass->isSubClassOf(currentClass) &&
+        resolvedMethod->klass->isSuperClassOf(currentClass) &&
         resolvedMethod->klass->getPackageName() != currentClass->getPackageName() &&
         ref->klass != currentClass &&
         !ref->klass->isSubClassOf(currentClass)) {
-        LOG_INFO("java.lang.IllegalAccessError");
+        if (!(ref->klass->isArray() && *resolvedMethod->name == "clone")) {
+            LOG_INFO("java.lang.IllegalAccessError");
+        }
     }
     auto methodToBeInvoked = heap::lookupMethodInClass(ref->klass, methodRef->name, methodRef->descriptor);
     if (methodToBeInvoked == nullptr || methodToBeInvoked->isAbstract()) {

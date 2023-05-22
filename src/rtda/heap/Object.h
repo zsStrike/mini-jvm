@@ -11,6 +11,7 @@ namespace heap {
     struct Object {
         shared<Class> klass;
         shared<Slots> fileds;
+        shared<Class> extra; // for JClass
 
         bool isInstanceOf(shared<Class> clazz);
         virtual i32 getLen() {
@@ -20,6 +21,7 @@ namespace heap {
 
         void setRefVal(shared<string> name, shared<string> descriptor, Object* ref);
         Object* getRefVal(shared<string> name, shared<string> descriptor);
+        virtual Object* clone();
     };
 
     template<typename T>
@@ -32,7 +34,17 @@ namespace heap {
         }
         shared<T[]> getData() { return data; }
         i32 getLen() override { return len; }
+        Object * clone() override;
     };
+
+    template<typename T>
+    Object *ArrayObject<T>::clone() {
+        ArrayObject<T>* aobj = new ArrayObject<T>(this->getLen());
+        for (int i = 0; i < this->getLen(); i++) {
+            aobj->getData()[i] = this->getData()[i];
+        }
+        return aobj;
+    }
 
     Object* newObject(shared<Class> klass);
 
@@ -42,6 +54,8 @@ namespace heap {
         obj->klass = klass;
         return obj;
     }
+
+    void arrayCopy(Object* src, Object* dest, int srcPos, int dstPos, int length);
 
 }
 

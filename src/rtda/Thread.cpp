@@ -23,3 +23,7 @@ shared<Frame> Thread::currentFrame() {
 shared<Frame> Thread::newFrame(shared<heap::Method> method) {
     return frame::newFrame(shared_from_this(), method);
 }
+
+shared<Frame> Thread::getFrame(int n) {
+    return stack->getFrame(n);
+}

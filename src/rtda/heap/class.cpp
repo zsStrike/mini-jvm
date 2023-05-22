@@ -10,22 +10,17 @@
 
 namespace heap {
     shared<Class> newClass(shared<ClassFile> cf) {
-        LOG_INFO("newClass");
         auto klass = std::make_shared<Class>();
         klass->accessFlags = cf->accessFlags;
         klass->name = cf->getClassName();
-        LOG_INFO("%s", *klass->name);
 
         klass->superClassName = cf->getSuperClassName();
         klass->interfaceNames = cf->getInterfaceNames();
         klass->constantPool = newConstantPool(klass, cf->constantPool);
-        LOG_INFO("newClass");
 
         klass->fields = newFields(klass, cf->fields);
-        LOG_INFO("newClass");
 
         klass->methods = newMethods(klass, cf->methods);
-        LOG_INFO("newClass");
 
         return klass;
     }
@@ -149,19 +144,11 @@ namespace heap {
     shared<Method> Class::getMainMethod() {
         auto name = make_shared<string>("main");
         auto descriptor = make_shared<string>("([Ljava/lang/String;)V");
-        return getStaticMethod(name, descriptor);
+        return getMethod(name, descriptor, true);
     }
 
     shared<Method> Class::getStaticMethod(std::shared_ptr<string> name, std::shared_ptr<string> descriptor) {
-        LOG_INFO("method name = %s, descriptor = %s", *name, *descriptor);
-        for (auto method : *methods) {
-            if (method->isStatic() &&
-                *method->name == *name &&
-                *method->descriptor == *descriptor) {
-                return method;
-            }
-        }
-        return nullptr;
+        return getMethod(name, descriptor, true);
     }
 
     bool Class::isSuperClassOf(shared<Class> other) {
@@ -173,7 +160,7 @@ namespace heap {
     }
 
     shared<Method> Class::getClinitMethod() {
-        return getStaticMethod(make_shared<string>("<clinit>"), make_shared<string>("()V"));
+        return getMethod(make_shared<string>("<clinit>"), make_shared<string>("()V"), true);
     }
 
     bool Class::isArray() {
@@ -186,7 +173,7 @@ namespace heap {
         }
         if (*name == "[Z") { return heap::newArray<i8>(shared_from_this(), count); }
         else if (*name == "[B") { return heap::newArray<i8>(shared_from_this(), count); }
-        else if (*name == "[C") { return heap::newArray<u16>(shared_from_this(), count); }
+        else if (*name == "[C") { return heap::newArray<char16_t>(shared_from_this(), count); }
         else if (*name == "[S") { return heap::newArray<i16>(shared_from_this(), count); }
         else if (*name == "[I") { return heap::newArray<i32>(shared_from_this(), count); }
         else if (*name == "[J") { return heap::newArray<i64>(shared_from_this(), count); }
@@ -205,7 +192,7 @@ namespace heap {
             return descriptor;
         }
         if (descriptor->at(0) == 'L') { // Object
-            return make_shared<string>(descriptor->begin() + 1, descriptor->end());
+            return make_shared<string>(descriptor->begin() + 1, descriptor->end() - 1);
         }
         for (auto [className, d] : primitiveTypes) {
             if (d == *descriptor) {     // primitive
@@ -253,6 +240,43 @@ namespace heap {
                     *field->name == *name &&
                     *field->descriptor == *descriptor) {
                     return field;
+                }
+            }
+        }
+        return nullptr;
+    }
+
+    shared<string> Class::getJavaName() {
+        auto javaName = make_shared<string>(*name);
+        std::replace(javaName->begin(), javaName->end(), '/', '.');
+        return javaName;
+    }
+
+    bool Class::isPrimitive() {
+        return primitiveTypes.count(*name) == 1;
+    }
+
+    Object *Class::getRefVar(shared<string> fieldName, shared<string> fieldDescriptor) {
+        auto field = getField(fieldName, fieldDescriptor, true);
+        return staticVars->getRef(field->SlotId);
+    }
+
+    void Class::setRefVar(shared<string> fieldName, shared<string> fieldDescriptor, Object *ref) {
+        auto field = getField(fieldName, fieldDescriptor, true);
+        staticVars->setRef(field->SlotId, ref);
+    }
+
+    shared<Method> Class::getInstanceMethod(std::shared_ptr<string> name, std::shared_ptr<string> descriptor) {
+        return getMethod(name, descriptor, false);
+    }
+
+    shared<Method> Class::getMethod(std::shared_ptr<string> name, std::shared_ptr<string> descriptor, bool isStatic) {
+        for (auto c = shared_from_this(); c != nullptr; c = c->superClass) {
+            for (auto method : *c->methods) {
+                if (method->isStatic() == isStatic &&
+                    *method->name == *name &&
+                    *method->descriptor == *descriptor) {
+                    return method;
                 }
             }
         }

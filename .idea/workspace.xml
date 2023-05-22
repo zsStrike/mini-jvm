@@ -15,6 +15,7 @@
       <config projectName="mini-jvm" targetName="instructions" />
       <config projectName="mini-jvm" targetName="main" />
       <config projectName="mini-jvm" targetName="interpreter" />
+      <config projectName="mini-jvm" targetName="native" />
       <config projectName="mini-jvm" targetName="test" />
       <config projectName="mini-jvm" targetName="rtda" />
       <config projectName="mini-jvm" targetName="classpath" />
@@ -29,7 +30,79 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="08e80506-e489-43df-8626-6faef12458f1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/HelloWorld.java" beforeDir="false" afterPath="$PROJECT_DIR$/HelloWorld.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BoxTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CloneTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GetClassTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ObjectTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/StringTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/instructions/reserved/invoke_native.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/instructions/reserved/invoke_native.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/native/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/native/java/lang/Class.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/native/java/lang/Class.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/native/java/lang/Double.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/native/java/lang/Double.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/native/java/lang/Float.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/native/java/lang/Float.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/native/java/lang/Object.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/native/java/lang/Object.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/native/java/lang/String.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/native/java/lang/String.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/native/java/lang/System.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/native/java/lang/System.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/native/registry.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/native/registry.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/native/sun/misc/Unsafe.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/native/sun/misc/Unsafe.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/native/sun/misc/VM.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/native/sun/misc/VM.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/native/sun/reflect/Reflection.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/native/sun/reflect/Reflection.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jvm_start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/jvm_start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/type.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/type.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions/base/class_init_logic.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/base/class_init_logic.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions/base/method_invoke_logic.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/base/method_invoke_logic.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions/constants/ldc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/constants/ldc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions/factory.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/factory.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions/loads/xaload.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/loads/xaload.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions/math/i2x.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/math/i2x.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions/math/i2x.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/math/i2x.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions/math/sh.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/math/sh.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions/references/arraylength.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/references/arraylength.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions/references/getfield.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/references/getfield.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions/references/getstatic.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/references/getstatic.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions/references/invokeinterface.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/references/invokeinterface.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions/references/invokespecial.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/references/invokespecial.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions/references/invokevirtual.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/references/invokevirtual.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions/references/new.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/references/new.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions/references/putfield.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/references/putfield.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions/references/putstatic.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/references/putstatic.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions/stack/dup.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/stack/dup.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions/stores/xastore.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/instructions/stores/xastore.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interpreter/interpreter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/interpreter/interpreter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rtda/LocalVars.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/LocalVars.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rtda/OperandStack.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/OperandStack.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rtda/Stack.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/Stack.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rtda/Stack.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/Stack.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rtda/Thread.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/Thread.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rtda/Thread.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/Thread.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rtda/heap/Object.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/Object.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rtda/heap/Object.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/Object.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rtda/heap/class.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/class.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rtda/heap/class.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/class.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rtda/heap/class_loader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/class_loader.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rtda/heap/class_loader.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/class_loader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rtda/heap/cp_fieldref.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/cp_fieldref.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rtda/heap/method.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/method.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rtda/heap/method.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/method.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rtda/heap/method_descriptor_parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/method_descriptor_parser.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rtda/heap/method_lookup.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/method_lookup.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rtda/heap/string_pool.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/string_pool.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rtda/heap/string_pool.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/rtda/heap/string_pool.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,9 +116,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CMakeLists.txt" />
         <option value="editable-svg" />
         <option value="xml" />
+        <option value="CMakeLists.txt" />
       </list>
     </option>
   </component>
@@ -57,7 +130,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="OCResolveContextSettings">
-    <option name="configuration" value="0-Debug-rtda" />
+    <option name="configuration" value="0-Debug-native" />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -84,7 +157,7 @@
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/strike/workspace/mini-jvm/src/rtda&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/strike/workspace/mini-jvm/src/native/java/lang&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -103,39 +176,40 @@
       <window_info id="Bookmarks" side_tool="true" />
       <window_info id="Commit_Guest" show_stripe_button="false" />
       <window_info id="Pull Requests" weight="0.32990152" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27057242" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21709937" />
       <window_info id="Commit" order="1" weight="0.25" />
       <window_info id="Structure" order="2" weight="0.21351835" />
       <window_info anchor="bottom" id="CMake" weight="0.25248617" />
       <window_info anchor="bottom" id="Database Changes" />
       <window_info anchor="bottom" id="TypeScript" />
       <window_info anchor="bottom" id="Python Packages" weight="0.32983425" />
-      <window_info anchor="bottom" id="Messages" weight="0.2160221" />
+      <window_info anchor="bottom" id="Messages" weight="0.32217342" />
       <window_info anchor="bottom" id="File Transfer" />
       <window_info anchor="bottom" id="Vcpkg" weight="0.32983425" />
       <window_info anchor="bottom" id="Find" show_stripe_button="false" weight="0.3298573" />
       <window_info anchor="bottom" id="clangd" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.32983425" />
       <window_info anchor="bottom" id="Problems View" order="1" weight="0.32983425" />
-      <window_info anchor="bottom" id="Run" order="3" weight="0.32762432" />
-      <window_info anchor="bottom" id="Profiler" order="4" weight="0.3298573" />
-      <window_info anchor="bottom" id="Services" order="5" weight="0.25138122" />
-      <window_info anchor="bottom" id="Debug" order="6" weight="0.45060372" />
-      <window_info anchor="bottom" id="Notifications" order="7" weight="0.25359118" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.32541436" />
+      <window_info anchor="bottom" id="Profiler" order="2" weight="0.3298573" />
+      <window_info anchor="bottom" id="Services" order="3" weight="0.25192097" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.3475138" />
+      <window_info anchor="bottom" id="Notifications" order="5" weight="0.25411636" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="6" visible="true" weight="0.37925357" />
+      <window_info anchor="bottom" id="Run" order="7" weight="0.36059275" />
       <window_info anchor="right" id="make" side_tool="true" weight="0.3299476" />
       <window_info anchor="right" id="Meet New UI" show_stripe_button="false" side_tool="true" />
       <window_info anchor="right" id="Hierarchy" order="0" weight="0.32990152" />
-      <window_info anchor="right" id="Database" order="1" weight="0.25022382" />
+      <window_info anchor="right" id="documentation.v2" order="1" side_tool="true" />
+      <window_info anchor="right" id="Database" order="2" weight="0.25022382" />
     </layout>
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/native/java/lang" />
       <recent name="$PROJECT_DIR$/src/rtda" />
       <recent name="$PROJECT_DIR$/src/rtda/heap" />
       <recent name="$PROJECT_DIR$/src/instructions/stores" />
       <recent name="$PROJECT_DIR$/src/instructions/loads" />
-      <recent name="$PROJECT_DIR$/src/instructions/comparisions" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/rtda/heap" />
@@ -164,7 +238,12 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="main" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="--Xjre /usr/lib/jvm/java-8-openjdk-amd64/jre \ --classpath $PROJECT_DIR$ \ --verboseInstFlag false \ --verboseClassFlag true \ --mainclass HelloWorld \ hello world this is args test" REDIRECT_INPUT="true" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="mini-jvm" TARGET_NAME="main" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="mini-jvm" RUN_TARGET_NAME="main">
+    <configuration name="main" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="$PROJECT_DIR$/build/src/main \     --Xjre /usr/lib/jvm/java-8-openjdk-amd64/jre \     --classpath $PROJECT_DIR$ \     --verboseInstFlag true                  \     --verboseClassFlag false                  \     --mainclass BoxTest" REDIRECT_INPUT="true" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="mini-jvm" TARGET_NAME="main" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="mini-jvm" RUN_TARGET_NAME="main">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="native" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="mini-jvm" TARGET_NAME="native" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -177,6 +256,7 @@
     <list>
       <item itemvalue="CMake Application.main" />
       <item itemvalue="CMake Application.log" />
+      <item itemvalue="CMake Application.native" />
       <item itemvalue="CMake Application.classpath" />
       <item itemvalue="CMake Application.rtda" />
       <item itemvalue="CMake Application.instructions" />
@@ -233,7 +313,14 @@
       <workItem from="1683841417604" duration="169000" />
       <workItem from="1683879851639" duration="485000" />
       <workItem from="1683880350507" duration="5966000" />
-      <workItem from="1683902655921" duration="10016000" />
+      <workItem from="1683902655921" duration="10070000" />
+      <workItem from="1684326765641" duration="57000" />
+      <workItem from="1684326840179" duration="599000" />
+      <workItem from="1684328040552" duration="32000" />
+      <workItem from="1684328140892" duration="14173000" />
+      <workItem from="1684480393284" duration="42000" />
+      <workItem from="1684480442465" duration="5550000" />
+      <workItem from="1684719216117" duration="7180000" />
     </task>
     <servers />
   </component>
@@ -249,15 +336,15 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+        <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/main.cpp</url>
-          <line>79</line>
+          <line>80</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/classpath/Classpath.cpp</url>
-          <line>21</line>
-          <option name="timeStamp" value="3" />
+          <url>file://$PROJECT_DIR$/src/rtda/heap/Object.cpp</url>
+          <line>18</line>
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

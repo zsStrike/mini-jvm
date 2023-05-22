@@ -3,6 +3,7 @@
 //
 
 #include "xastore.h"
+#include "boost/type_index.hpp"
 
 inline void checkNotNull(heap::Object* ref) {
     if (ref == nullptr) {
@@ -54,7 +55,9 @@ void CASTORE::execute(shared<Frame> frame) {
     auto stack = frame->operandStack;
     auto val = stack->popInt();
     auto index = stack->popInt();
-    auto arrRef = dynamic_cast<heap::ArrayObject<u16>*>(stack->popRef());
+//    LOG_INFO("type = %s", boost::typeindex::type_id_runtime(*stack->getRefFromTop(0)).pretty_name())
+    auto arrRef = dynamic_cast<heap::ArrayObject<char16_t>*>(stack->popRef());
+//    LOG_INFO("xs");
     checkNotNull(arrRef);
     auto chars = arrRef->getData();
     checkIndex(arrRef->getLen(), index);

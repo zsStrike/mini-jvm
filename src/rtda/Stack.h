@@ -14,6 +14,7 @@ struct Stack {
     void push(shared<Frame> frame);
     shared<Frame> pop();
     shared<Frame> top();
+    shared<Frame> getFrame(int n);
     bool isEmpty() { return _top == nullptr; }
 };
 

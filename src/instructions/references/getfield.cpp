@@ -6,22 +6,30 @@
 #include "../../rtda/heap/class_member.cpp"
 
 void GET_FIELD::execute(shared<Frame> frame) {
+    LOG_INFO("GET_FIELD")
     auto cp = frame->method->klass->constantPool;
-    auto fieldRef = std::static_pointer_cast<heap::FieldRefConstant>(cp->getConstant(index));
+    LOG_INFO("GET_FIELD")
+
+    auto fieldRef = std::dynamic_pointer_cast<heap::FieldRefConstant>(cp->getConstant(index));
+    LOG_INFO("GET_FIELD")
+
     auto field = fieldRef->val->resolvedField();
+    LOG_INFO("GET_FIELD")
+
     if (field->isStatic()) {
         LOG_INFO("java.lang.IncompatibleClassChangeError");
-        return;
     }
+    LOG_INFO("GET_FIELD")
+
     auto stack = frame->operandStack;
     auto ref = stack->popRef();
     if (ref == nullptr) {
         LOG_INFO("java.lang.NullPointerException");
-        return;
     }
     auto descriptor = field->descriptor;
     auto slotId = field->SlotId;
     auto slots = ref->fileds;
+    LOG_INFO("GET_FIELD")
     switch (descriptor->at(0)) {
         case 'Z':
         case 'B':
@@ -42,6 +50,7 @@ void GET_FIELD::execute(shared<Frame> frame) {
         case 'L':
         case '[':
             stack->pushRef(slots->getRef(slotId));
+            break;
         default:
             LOG_INFO("bad descriptor: {}", *descriptor);
     }

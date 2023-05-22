@@ -3,15 +3,20 @@
 //
 
 #include "getstatic.h"
+#include "../base/class_init_logic.h"
 
 void GET_STATIC::execute(shared<Frame> frame) {
     auto cp = frame->method->klass->constantPool;
-    auto fieldRef = std::static_pointer_cast<heap::FieldRefConstant>(cp->getConstant(index));
+    auto fieldRef = std::dynamic_pointer_cast<heap::FieldRefConstant>(cp->getConstant(index));
     auto field = fieldRef->val->resolvedField();
     auto klass = field->klass;
+    if (!klass->initStarted) {
+        frame->revertNextPc();
+        initClass(frame->thread, klass);
+        return;
+    }
     if (!field->isStatic()) {
         LOG_INFO("java.lang.IncompatibleClassChangeError");
-        return;
     }
     auto descriptor = field->descriptor;
     auto slotId = field->SlotId;

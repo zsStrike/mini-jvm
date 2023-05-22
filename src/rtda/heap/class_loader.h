@@ -15,6 +15,9 @@ namespace heap {
         shared<Class> defineClass(shared_buffer data);
 
         shared<Class> loadArrayClass(shared<string> name);
+        void loadBasicClasses();
+        void loadPrimitiveClass(shared<string> className);
+        void loadPrimitiveClasses();
     };
 
     shared<ClassLoader> newClassLoader(shared<Classpath> cp, bool verboseFlag=false);

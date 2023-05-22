@@ -11,6 +11,7 @@
 #include <memory>
 #include "./rtda/Frame.h"
 #include "./interpreter/interpreter.h"
+#include "./native/registry.hpp"
 
 namespace bpo = boost::program_options;
 
@@ -89,6 +90,7 @@ void startJVM(bpo::variables_map vmap) {
             args = make_shared<vector<string>>(vmap["args"].as<vector<string>>());
         }
         LOG_INFO("className=%s", className);
+        native::initNativeMethodsRegistry();
         Interpreter::interpret(mainMethod, vmap["verboseInstFlag"].as<bool>(), args);
     } else {
         LOG_INFO("main method not found in %s class", className);

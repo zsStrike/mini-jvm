@@ -37,9 +37,11 @@ void BALOAD::execute(shared<Frame> frame) {
 }
 
 void CALOAD::execute(shared<Frame> frame) {
+    LOG_INFO("arrref")
     auto stack = frame->operandStack;
     auto index = stack->popInt();
-    auto arrRef = dynamic_cast<heap::ArrayObject<u16>*>(stack->popRef());
+    auto arrRef = dynamic_cast<heap::ArrayObject<char16_t>*>(stack->popRef());
+    LOG_INFO("arrref")
     checkNotNull(arrRef);
     auto bytes = arrRef->getData();
     checkIndex(arrRef->getLen(), index);

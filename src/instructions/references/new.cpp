@@ -16,7 +16,6 @@ void NEW::execute(shared<Frame> frame) {
     }
     if (klass->isInterface() || klass->isAbstract()) {
         LOG_INFO("panic: java.lang.InstantiationError");
-        return;
     }
     auto ref = klass->newObject();
     frame->operandStack->pushRef(ref);

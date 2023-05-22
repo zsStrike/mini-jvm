@@ -24,13 +24,11 @@ namespace heap {
     }
 
     void FieldRef::resolveFieldRef() {
-        LOG_INFO("FieldRef::resolveFieldRef")
         auto d = cp->klass;
         auto c = resolvedClass();
-        LOG_INFO("FieldRef::resolveFieldRef")
 
+        LOG_INFO("resolveFieldRef")
         auto field = lookupField(c, name, descriptor);
-        LOG_INFO("FieldRef::resolveFieldRef")
 
         if (field == nullptr) {
             LOG_INFO("panic: java.lang.NoSuchFieldError");
@@ -42,11 +40,20 @@ namespace heap {
     }
 
     shared<Field> FieldRef::lookupField(shared<Class> c, shared<string> name, shared<string> descriptor) {
+//        LOG_INFO("===lookupField: %s.%s%s", *c->name, *name, *descriptor);
+//        if (c->fields == nullptr) {
+//            LOG_INFO("+++lookupField: %s.%s%s", *c->name, *name, *descriptor);
+//        }
         for (auto&& field : *c->fields) {
+//            LOG_INFO("lookupField: %s.%s %s", *c->name, *field->name, *field->descriptor);
             if (*field->name == *name && *field->descriptor == *descriptor) {
+//                LOG_INFO("found")
                 return field;
             }
         }
+//        if (c->interfaces == nullptr) {
+//            LOG_INFO("+++lookupField: %s.%s%s", *c->name, *name, *descriptor);
+//        }
         for (auto&& iface: *c->interfaces) {
             auto field = lookupField(iface, name, descriptor);
             if (field != nullptr) {
@@ -56,6 +63,7 @@ namespace heap {
         if (c->superClass != nullptr) {
             return lookupField(c->superClass, name, descriptor);
         }
+//        LOG_INFO("lookupField not found: %s.%s%s", *c->name, *name, *descriptor);
         return nullptr;
     }
 

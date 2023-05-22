@@ -30,15 +30,19 @@ void IUSHR::execute(shared<Frame> frame) {
 
 void LSHL::execute(shared<Frame> frame) {
     auto stack = frame->operandStack;
-    auto v2 = stack->popLong();
+
+    auto v2 = stack->popInt();
+
     auto v1 = stack->popLong();
+
     auto s = u32(v2) & 0x3f;
     stack->pushLong(v1 << s);
+
 }
 
 void LSHR::execute(shared<Frame> frame) {
     auto stack = frame->operandStack;
-    auto v2 = stack->popLong();
+    auto v2 = stack->popInt();
     auto v1 = stack->popLong();
     auto s = u32(v2) & 0x3f;
     stack->pushLong(v1 >> s);
@@ -46,7 +50,7 @@ void LSHR::execute(shared<Frame> frame) {
 
 void LUSHR::execute(shared<Frame> frame) {
     auto stack = frame->operandStack;
-    auto v2 = stack->popLong();
+    auto v2 = stack->popInt();
     auto v1 = stack->popLong();
     auto s = u32(v2) & 0x3f;
     stack->pushLong(i64(u64(v1) >> s));

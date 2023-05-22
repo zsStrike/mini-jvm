@@ -29,11 +29,11 @@ void logInstruction(shared<Frame> frame, shared<Instruction> inst) {
 }
 
 void loop(shared<Thread> thread, bool logInst) {
-    shared<Frame> frame = thread->currentFrame();
+//    shared<Frame> frame = thread->currentFrame();
     auto reader = std::make_shared<BytecodeReader>();
     try {
         while (true) {
-            frame = thread->currentFrame();
+            auto frame = thread->currentFrame();
             auto pc = frame->nextPc;
             thread->setPc(pc);
             // decode
@@ -54,7 +54,7 @@ void loop(shared<Thread> thread, bool logInst) {
             }
         }
     } catch (...) {
-        logFrames(frame->thread);
+        logFrames(thread);
     }
 
 }
@@ -79,9 +79,7 @@ void Interpreter::interpret(std::shared_ptr<heap::Method> method, bool logInst, 
     auto thread = thread::newThread();
     auto frame = thread->newFrame(method);
     thread->pushFrame(frame);
-    LOG_INFO("interpret");
     auto jArgs = createArgsArray(method->klass->loader, args);
-    LOG_INFO("interpret");
     frame->localVars->setRef(0, jArgs);
     loop(thread, logInst);
 }

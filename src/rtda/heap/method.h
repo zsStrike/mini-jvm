@@ -10,7 +10,8 @@ namespace heap {
         uint argSlotCount;
 
         void copyAttributes(shared<MemberInfo> cfMethod);
-        void calcArgSlotCount();
+        void calcArgSlotCount(svs<string> paramTypes);
+        void injectCodeAttribute(shared<string> returnType);
     };
     svs<Method> newMethods(shared<Class> klass, svs<MemberInfo> cfMethods);
 }

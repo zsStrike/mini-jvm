@@ -35,11 +35,51 @@
 #    --mainclass BubbleSortTest
 
 # ch8 for string operations
+#/home/strike/workspace/mini-jvm/build/src/main \
+#    --Xjre /usr/lib/jvm/java-8-openjdk-amd64/jre \
+#    --classpath /home/strike/workspace/mini-jvm \
+#    --verboseInstFlag false                  \
+#    --verboseClassFlag false                  \
+#    --mainclass HelloWorld  \
+#    hello world this is args test
+
+# ch9 for getClass Native Method
+#/home/strike/workspace/mini-jvm/build/src/main \
+#    --Xjre /usr/lib/jvm/java-8-openjdk-amd64/jre \
+#    --classpath /home/strike/workspace/mini-jvm \
+#    --verboseInstFlag false                  \
+#    --verboseClassFlag false                  \
+#    --mainclass GetClassTest
+
+# ch9 for string Test and Native Method
+#/home/strike/workspace/mini-jvm/build/src/main \
+#    --Xjre /usr/lib/jvm/java-8-openjdk-amd64/jre \
+#    --classpath /home/strike/workspace/mini-jvm \
+#    --verboseInstFlag false                  \
+#    --verboseClassFlag false                  \
+#    --mainclass StringTest
+
+# ch9 for hashCode native method
+#/home/strike/workspace/mini-jvm/build/src/main \
+#    --Xjre /usr/lib/jvm/java-8-openjdk-amd64/jre \
+#    --classpath /home/strike/workspace/mini-jvm \
+#    --verboseInstFlag false                  \
+#    --verboseClassFlag false                  \
+#    --mainclass ObjectTest
+
+# ch9 for clone native method
+#/home/strike/workspace/mini-jvm/build/src/main \
+#    --Xjre /usr/lib/jvm/java-8-openjdk-amd64/jre \
+#    --classpath /home/strike/workspace/mini-jvm \
+#    --verboseInstFlag false                  \
+#    --verboseClassFlag false                  \
+#    --mainclass CloneTest
+
+# ch9 for clone native method
 /home/strike/workspace/mini-jvm/build/src/main \
     --Xjre /usr/lib/jvm/java-8-openjdk-amd64/jre \
     --classpath /home/strike/workspace/mini-jvm \
     --verboseInstFlag false                  \
     --verboseClassFlag false                  \
-    --mainclass HelloWorld  \
-    hello world this is args test
+    --mainclass BoxTest
 

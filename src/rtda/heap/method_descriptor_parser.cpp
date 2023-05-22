@@ -83,6 +83,7 @@ namespace heap {
     }
 
     shared<string> MethodDescriptorParser::parseObjectType() {
+        LOG_INFO("parseObjectType");
         auto unread = make_shared<string>(raw->substr(offset));
         auto semicolonIndex = unread->find(';');
         if (semicolonIndex == string::npos) {
@@ -93,6 +94,7 @@ namespace heap {
             auto objEnd = offset + semicolonIndex + 1;
             offset = objEnd;
             auto type = make_shared<string>(raw->substr(objStart, objEnd - objStart));
+            LOG_INFO("type= %s", *type);
             return type;
         }
 
